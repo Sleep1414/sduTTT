@@ -1,25 +1,38 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
-public  class NeighbourField {
-    private HashMap<Pos, NeighbourField> Neighbours;
-
-
+public  class NeighbourField  {
+    HashMap<Pos, NeighbourField> neighbours;
+    ArrayList <Subscriber> subscribers;
 
     enum checkState{ PLAYER1, PLAYER2, UNCHECKED}
-    private checkState check;
+    checkState check;
 
 
-    NeighbourField(){
-        this.check = checkState.UNCHECKED;
+    public void notifySubscriber() {
+        for (Subscriber subscriber : subscribers ) {
+                subscriber.update(this);
+        }
     }
 
-    public void addNeighbour(Pos orientation, NeighbourField field) {
-        Neighbours.put(orientation, field);
+
+    NeighbourField(NeighbourFieldField parent){
+        this.check = checkState.UNCHECKED;
+        subscribers = new ArrayList<Subscriber>();
+        subscribers.add(parent);
+
+    }
+
+    public void putNeighbour(Pos orientation, NeighbourField field) {
+        neighbours.put(orientation, field);
     }
 
     public void check(int playerID){
         if (playerID == 1){check = checkState.PLAYER1;}
         else if (playerID == 2) { check =checkState.PLAYER2;}
+
+        notifySubscriber();
 
 
     }
@@ -29,9 +42,12 @@ public  class NeighbourField {
     public boolean isChecked() {
         return check != checkState.UNCHECKED;
     }
-    public Integer checkedby(){
-            if(check == checkState.PLAYER1){return 1;}
-            else if (check == checkState.PLAYER2) { return 2;}
-        return null;
+
+    public checkState getCheck() {
+        return check;
+    }
+
+    public HashMap<Pos,NeighbourField> getNeighbours() {
+        return neighbours;
     }
 }
