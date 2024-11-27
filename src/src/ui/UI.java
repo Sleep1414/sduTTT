@@ -11,6 +11,9 @@ public class UI {
 
 
     public void createplaywindow() {
+
+        JLabel currentplayerL;
+
         //window
         JFrame playwindow = new JFrame("Ultimate TicTacToe");
         playwindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,24 +25,57 @@ public class UI {
         JPanel mainpanel = new JPanel(new BorderLayout());
 
         //back button - obere Leiste
-        JPanel leiste = new JPanel(new BorderLayout());
-        JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JButton backbutton = new JButton("back");
+        JPanel topleiste = new JPanel(new BorderLayout());
 
+        //button
+        JButton backbutton = new JButton("Back");
+        JPanel leftpanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        leftpanel.add(backbutton);
         backbutton.addActionListener(new BackButtonListener(playwindow));
 
-        top.add(backbutton);
-        leiste.add(top, BorderLayout.NORTH);
+        //current player
+        currentplayerL = new JLabel("Am Zug: Spieler ");
+        currentplayerL.setFont(new Font("Arial", Font.BOLD,16));
+        JPanel rightpanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        rightpanel.add(currentplayerL);
+
+        //add
+        topleiste.add(leftpanel, BorderLayout.WEST);
+        topleiste.add(rightpanel, BorderLayout.EAST);
 
         //gameboard
-        JPanel game = new JPanel();
-        game.setLayout(new BorderLayout());
-        game.setBackground(Color.PINK);
+        JPanel gameboard = new JPanel(new GridLayout(3,3));
+        gameboard.setBackground(Color.PINK);
+
+        // 9x9 groß
+        for (int i = 0; i < 9; i++) {
+            JPanel ticTacToeBoard = new JPanel(new GridLayout(3, 3));
+            ticTacToeBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
+            ticTacToeBoard.setBackground(Color.LIGHT_GRAY);
+
+            // 9x9 klein
+            for (int j = 0; j < 9; j++) {
+                JPanel innerTicTacToeCell = new JPanel(new GridLayout(3, 3));
+                innerTicTacToeCell.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+                innerTicTacToeCell.setBackground(Color.WHITE);
+
+
+                for (int k = 0; k < 9; k++) {
+                    JButton innerCell = new JButton();
+                    innerCell.setPreferredSize(new Dimension(20, 20));
+                    innerTicTacToeCell.add(innerCell);
+                }
+
+                ticTacToeBoard.add(innerTicTacToeCell);
+            }
+
+            gameboard.add(ticTacToeBoard);
+        }
 
 
         //adding
-        mainpanel.add(leiste, BorderLayout.NORTH);
-        mainpanel.add(game, BorderLayout.CENTER);
+        mainpanel.add(topleiste,BorderLayout.NORTH);
+        mainpanel.add(gameboard, BorderLayout.CENTER);
 
         playwindow.add(mainpanel);
         playwindow.setVisible(true);
