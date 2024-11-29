@@ -1,4 +1,4 @@
-package ui;
+package visuals;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,18 +55,13 @@ public class UI {
 
             // 9x9 klein
             for (int j = 0; j < 9; j++) {
-                JPanel innerTicTacToeCell = new JPanel(new GridLayout(3, 3));
-                innerTicTacToeCell.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
-                innerTicTacToeCell.setBackground(Color.WHITE);
 
-
-                for (int k = 0; k < 9; k++) {
                     JButton innerCell = new JButton();
                     innerCell.setPreferredSize(new Dimension(20, 20));
-                    innerTicTacToeCell.add(innerCell);
-                }
 
-                ticTacToeBoard.add(innerTicTacToeCell);
+
+                ticTacToeBoard.add(innerCell);
+
             }
 
             gameboard.add(ticTacToeBoard);
