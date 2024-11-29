@@ -7,7 +7,6 @@ public class Main {
       //NeighbourField nei = new NeighbourField();
         //System.out.println(nei.isChecked());
 
-
         UI spielfeld1 = new UI();
     }
 }

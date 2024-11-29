@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class UI {
 
-   public UI() {
-       createplaywindow();
+    public UI() {
+        createplaywindow();
     }
 
 
@@ -56,9 +56,18 @@ public class UI {
             // 9x9 klein
             for (int j = 0; j < 9; j++) {
 
-                    JButton innerCell = new JButton();
-                    innerCell.setPreferredSize(new Dimension(20, 20));
+                JButton innerCell = new JButton();
+                innerCell.setPreferredSize(new Dimension(20, 20));
 
+                // Eindeutigen ActionCommand setzen (z.B. "3.5" für Feld 3, inneres Feld 5)
+                String actionCommand = (i + 1) + "." + (j + 1);
+                innerCell.setActionCommand(actionCommand);
+
+                // ActionListener hinzufügen
+                innerCell.addActionListener(e -> {
+                    String field = e.getActionCommand(); // ActionCommand auslesen
+                    System.out.println("Gedrücktes Feld: " + field);
+                });
 
                 ticTacToeBoard.add(innerCell);
 
