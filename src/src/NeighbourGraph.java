@@ -1,5 +1,12 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class NeighbourGraph extends NeighbourFieldField {
-    private HashMap<Pos,NeighbourField> secondOrderField;
+
+
+    NeighbourGraph() {
+        super(null);
+
+
+    }
 }

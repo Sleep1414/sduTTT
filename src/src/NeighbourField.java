@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public  class NeighbourField  {
-    HashMap<Pos, NeighbourField> neighbours;
+    Map<Pos, NeighbourField> neighbours;
     ArrayList <Subscriber> subscribers;
 
     enum checkState{ PLAYER1, PLAYER2, UNCHECKED}
@@ -21,6 +22,7 @@ public  class NeighbourField  {
         this.check = checkState.UNCHECKED;
         subscribers = new ArrayList<Subscriber>();
         subscribers.add(parent);
+        neighbours = new HashMap<Pos,NeighbourField>();
 
     }
 
@@ -47,7 +49,7 @@ public  class NeighbourField  {
         return check;
     }
 
-    public HashMap<Pos,NeighbourField> getNeighbours() {
+    public Map<Pos,NeighbourField> getNeighbours() {
         return neighbours;
     }
 }

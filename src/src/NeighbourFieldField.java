@@ -1,5 +1,6 @@
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Iterator;
+import java.util.Map;
 
 public class NeighbourFieldField extends NeighbourField implements Subscriber {
     private HashMap <Pos,NeighbourField> firstOrderField;
@@ -12,10 +13,16 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         if( !newSetField.isChecked()){
             return checkState.UNCHECKED;
         }
-        AtomicInteger i = new AtomicInteger();
-         newSetField.getNeighbours().forEach((position,newfield)-> {if (i.get() < 4){evaluate(newfield, newSetField.getCheck() ,position,0 );}; i.getAndIncrement(); });
-    }
-    private checkState evaluate(NeighbourField field, checkState previousState, Pos dir, int count){
+        Iterator<Map.Entry<Pos, NeighbourField>> fields = newSetField.getNeighbours().entrySet().iterator();
+        for (int i = 0 ; i < 3; i++) {
+           var nextfield = fields.next();
+           evaluate(nextfield.getValue(), nextfield.getValue().getCheck(), nextfield.getKey(),1);
+
+        }
+
+        }
+
+    private checkState evaluate(NeighbourField field, checkState previousState, Pos dir, int count){ return null;
 
     }
 
