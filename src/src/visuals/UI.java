@@ -2,12 +2,14 @@ package visuals;
 
 import javax.swing.*;
 import java.awt.*;
+import 
 
 public class UI {
 
     public UI() {
         createplaywindow();
     }
+
 
 
     public void createplaywindow() {
@@ -48,6 +50,7 @@ public class UI {
         gameboard.setBackground(Color.PINK);
 
         // 9x9 groß
+
         for (int i = 0; i < 9; i++) {
             JPanel ticTacToeBoard = new JPanel(new GridLayout(3, 3));
             ticTacToeBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
@@ -59,13 +62,13 @@ public class UI {
                 JButton innerCell = new JButton();
                 innerCell.setPreferredSize(new Dimension(20, 20));
 
-                // Eindeutigen ActionCommand setzen (z.B. "3.5" für Feld 3, inneres Feld 5)
+
                 String actionCommand = (i + 1) + "." + (j + 1);
                 innerCell.setActionCommand(actionCommand);
 
-                // ActionListener hinzufügen
+
                 innerCell.addActionListener(e -> {
-                    String field = e.getActionCommand(); // ActionCommand auslesen
+                    String field = e.getActionCommand();
                     System.out.println("Gedrücktes Feld: " + field);
                 });
 
