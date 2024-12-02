@@ -2,7 +2,7 @@ package visuals;
 
 import javax.swing.*;
 import java.awt.*;
-import 
+import pos.Pos;
 
 public class UI {
 
@@ -50,20 +50,20 @@ public class UI {
         gameboard.setBackground(Color.PINK);
 
         // 9x9 groß
-
-        for (int i = 0; i < 9; i++) {
+        Pos[] positions = Pos.values();
+        for (int i = 0; i < positions.length; i++) {
             JPanel ticTacToeBoard = new JPanel(new GridLayout(3, 3));
             ticTacToeBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
             ticTacToeBoard.setBackground(Color.LIGHT_GRAY);
 
             // 9x9 klein
-            for (int j = 0; j < 9; j++) {
+            for (int j = 0; j < positions.length; j++) {
 
                 JButton innerCell = new JButton();
                 innerCell.setPreferredSize(new Dimension(20, 20));
 
 
-                String actionCommand = (i + 1) + "." + (j + 1);
+                String actionCommand = positions[i] + "-" + positions[j];
                 innerCell.setActionCommand(actionCommand);
 
 
