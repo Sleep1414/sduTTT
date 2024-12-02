@@ -1,4 +1,4 @@
-import pos.Pos;
+import Direction.Pos;
 
 import java.util.HashMap;
 import java.util.Iterator;
