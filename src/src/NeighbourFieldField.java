@@ -117,6 +117,9 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         return evaluate(field.neighbours.get(dir), previousState, dir, count++,field);
 
     }
+    public NeighbourField getField(Pos direction){
+        return childField.get(direction);
+    }
 
     @Override
     public void update(NeighbourField field) {

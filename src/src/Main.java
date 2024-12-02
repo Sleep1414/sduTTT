@@ -1,3 +1,4 @@
+import Direction.Pos;
 import visuals.UI;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -8,5 +9,9 @@ public class Main {
         //System.out.println(nei.isChecked());
 
         UI spielfeld1 = new UI();
+
+        NeighbourGraph gamefield = new NeighbourGraph();
+        System.out.println( gamefield.getField(Pos.CENTERLEFT));
+
     }
 }

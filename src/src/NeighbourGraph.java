@@ -14,15 +14,15 @@ public class NeighbourGraph extends NeighbourFieldField {
         childField = new HashMap<>();
 
         // Create NeighbourField objects for each position
-        NeighbourField upperLeft = new NeighbourFieldField(this);
-        NeighbourField upperMid = new NeighbourFieldField(this);
-        NeighbourField upperRight = new NeighbourFieldField(this);
-        NeighbourField centerLeft = new NeighbourFieldField(this);
-        NeighbourField centerMid = new NeighbourFieldField(this);
-        NeighbourField centerRight = new NeighbourFieldField(this);
-        NeighbourField lowerLeft = new NeighbourFieldField(this);
-        NeighbourField lowerMid = new NeighbourFieldField(this);
-        NeighbourField lowerRight = new NeighbourFieldField(this);
+        NeighbourFieldField upperLeft = new NeighbourFieldField(this);
+        NeighbourFieldField upperMid = new NeighbourFieldField(this);
+        NeighbourFieldField upperRight = new NeighbourFieldField(this);
+        NeighbourFieldField centerLeft = new NeighbourFieldField(this);
+        NeighbourFieldField centerMid = new NeighbourFieldField(this);
+        NeighbourFieldField centerRight = new NeighbourFieldField(this);
+        NeighbourFieldField lowerLeft = new NeighbourFieldField(this);
+        NeighbourFieldField lowerMid = new NeighbourFieldField(this);
+        NeighbourFieldField lowerRight = new NeighbourFieldField(this);
 
         // Put these fields in the map
         childField.put(Pos.UPPERLEFT, upperLeft);
