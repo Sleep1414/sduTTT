@@ -2,7 +2,7 @@ package visuals;
 
 import javax.swing.*;
 import java.awt.*;
-import pos.Pos;
+import Direction.Pos;
 
 public class UI {
 
