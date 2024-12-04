@@ -10,9 +10,6 @@ public class NeighbourGraph extends NeighbourFieldField {
         super(null);
         // Assuming the parent is not used or handled elsewhere.
 
-        // Initialize the grid (3x3 Tic-Tac-Toe)
-        childField = new HashMap<>();
-
         // Create NeighbourField objects for each position
         NeighbourFieldField upperLeft = new NeighbourFieldField(this);
         NeighbourFieldField upperMid = new NeighbourFieldField(this);
@@ -36,34 +33,19 @@ public class NeighbourGraph extends NeighbourFieldField {
         childField.put(Pos.LOWERRIGHT, lowerRight);
 
         // Set neighbors for each NeighbourField
-        setNeighbours(upperLeft, upperMid, centerLeft, null, null, null, lowerLeft, lowerMid, lowerRight);
-        setNeighbours(upperMid, upperLeft, centerMid, upperRight, null, null, lowerMid, lowerLeft, lowerRight);
-        setNeighbours(upperRight, upperMid, centerRight, null, null, null, lowerRight, lowerMid, lowerLeft);
+        setNeighbours(upperLeft,null,null,null,null,upperMid,null,centerLeft,centerMid);
+        setNeighbours(upperMid,null,null,null,upperLeft,upperRight,null,centerMid,null);
+        setNeighbours(upperRight,null,null,null,upperMid,null,centerMid,centerRight,null );
 
-        setNeighbours(centerLeft, upperLeft, centerMid, centerRight, null, null, lowerLeft, lowerMid, lowerRight);
-        setNeighbours(centerMid, upperMid, centerLeft, centerRight, null, null, lowerMid, lowerLeft, lowerRight);
-        setNeighbours(centerRight, upperRight, centerMid, centerLeft, null, null, lowerRight, lowerMid, lowerLeft);
+        setNeighbours(centerLeft,null, upperLeft,null,null,centerMid,null,lowerLeft,null);
+        setNeighbours(centerMid, upperLeft, upperMid,upperRight,centerLeft,centerRight,lowerLeft,lowerMid,lowerRight);
+        setNeighbours(centerRight, null,upperRight,null,centerMid,null,null,lowerRight,null);
 
-        setNeighbours(lowerLeft, lowerMid, centerLeft, null, null, null, upperLeft, upperMid, upperRight);
-        setNeighbours(lowerMid, lowerLeft, centerMid, lowerRight, null, null, upperMid, upperLeft, upperRight);
-        setNeighbours(lowerRight, lowerMid, centerRight, null, null, null, upperRight, upperMid, upperLeft);
+        setNeighbours(lowerLeft, null, centerLeft,centerMid,null,lowerMid,null,null,null);
+        setNeighbours(lowerMid, null,centerMid,null,lowerLeft, lowerRight,null,null,null);
+        setNeighbours(lowerRight, centerMid,centerRight,null,lowerMid,null,null,null,null);
     }
 
-    // Helper method to set neighbors for a NeighbourField
-    private void setNeighbours(NeighbourField field, NeighbourField upper, NeighbourField mid, NeighbourField right,
-                               NeighbourField left, NeighbourField bottom, NeighbourField lower, NeighbourField lowerMid,
-                               NeighbourField lowerRight) {
-        field.putNeighbour(Pos.UPPERLEFT, upper);
-        field.putNeighbour(Pos.UPPERMID, mid);
-        field.putNeighbour(Pos.UPPERRIGHT, right);
-        field.putNeighbour(Pos.CENTERLEFT, left);
-        field.putNeighbour(Pos.CENTERMID, field);
-        field.putNeighbour(Pos.CENTERRIGHT, right);
-        field.putNeighbour(Pos.LOWERLEFT, lower);
-        field.putNeighbour(Pos.LOWERMID, lowerMid);
-        field.putNeighbour(Pos.LOWERRIGHT, lowerRight);
-
-    }
 
 
 

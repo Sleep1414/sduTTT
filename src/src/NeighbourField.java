@@ -7,11 +7,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public  class NeighbourField  {
-    Map<Direction.Pos, NeighbourField> neighbours;
-    ArrayList <Subscriber> subscribers;
+    protected Map<Pos, NeighbourField> neighbours;
+    protected ArrayList <Subscriber> subscribers;
 
     enum checkState{ PLAYER1, PLAYER2, UNCHECKED}
-    checkState check;
+    protected checkState check = checkState.UNCHECKED ;
+
+    public NeighbourField getField(Pos direction) {
+        return null;
+    }
+
+
 
 
     public void notifySubscriber() {
@@ -25,11 +31,11 @@ public  class NeighbourField  {
         this.check = checkState.UNCHECKED;
         subscribers = new ArrayList<Subscriber>();
         subscribers.add(parent);
-        neighbours = new HashMap<Direction.Pos,NeighbourField>();
+        neighbours = new HashMap<Pos,NeighbourField>();
 
     }
 
-    public void putNeighbour(Direction.Pos orientation, NeighbourField field) {
+    public void putNeighbour(Pos orientation, NeighbourField field) {
         neighbours.put(orientation, field);
     }
 
@@ -52,7 +58,7 @@ public  class NeighbourField  {
         return check;
     }
 
-    public Map<Direction.Pos,NeighbourField> getNeighbours() {
+    public Map<Pos,NeighbourField> getNeighbours() {
         return neighbours;
     }
 }
