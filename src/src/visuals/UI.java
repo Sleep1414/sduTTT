@@ -2,7 +2,6 @@ package visuals;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.Flow;
 
 import Direction.Pos;
 
@@ -89,4 +88,5 @@ public class UI {
         playwindow.add(mainpanel);
         playwindow.setVisible(true);
     }
+
 }

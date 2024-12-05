@@ -9,6 +9,7 @@ public class Main {
 
         UI spielfeld1 = new UI();
 
+
         NeighbourGraph gamefield = new NeighbourGraph();
         gamefield.getField(Pos.CENTERLEFT).getField(Pos.CENTERLEFT).check(1);
         gamefield.getField(Pos.CENTERLEFT).getField(Pos.UPPERLEFT).check(1);

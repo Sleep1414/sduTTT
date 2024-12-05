@@ -28,10 +28,9 @@ public  class NeighbourField  {
 
 
     NeighbourField(NeighbourFieldField parent){
-        this.check = checkState.UNCHECKED;
-        subscribers = new ArrayList<Subscriber>();
+        subscribers = new ArrayList<>();
         subscribers.add(parent);
-        neighbours = new HashMap<Pos,NeighbourField>();
+        neighbours = new HashMap<>();
 
     }
 
