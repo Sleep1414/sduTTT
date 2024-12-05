@@ -1,92 +1,114 @@
 package visuals;
 
+import Direction.Pos;
+
 import javax.swing.*;
 import java.awt.*;
 
-import Direction.Pos;
-
 public class UI {
 
+
     public UI() {
-        createplaywindow();
+        createPlayWindow();
     }
 
 
 
-    public void createplaywindow() {
+    private void createPlayWindow() {
+        // window
+        JFrame playWindow = createMainWindow();
 
-        JLabel currentplayerL;
+        // main layout
+        JPanel mainPanel = new JPanel(new BorderLayout());
 
-        //window
-        JFrame playwindow = new JFrame("Ultimate TicTacToe");
-        playwindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        playwindow.setSize(600, 600);
-        playwindow.setLocationRelativeTo(null);
-        playwindow.setBackground(Color.DARK_GRAY);
+        // top bar
+        JPanel topBar = createTopBar(playWindow);
 
-        //main layout
-        JPanel mainpanel = new JPanel(new BorderLayout());
+        // game board
+        JPanel gameBoard = createGameBoard();
 
-        //back button - obere Leiste
-        JPanel topleiste = new JPanel(new BorderLayout());
+        // adding components to the main panel
+        mainPanel.add(topBar, BorderLayout.NORTH);
+        mainPanel.add(gameBoard, BorderLayout.CENTER);
 
-        //button
-        JButton backbutton = new JButton("Back");
-        JPanel leftpanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        leftpanel.add(backbutton);
-        backbutton.addActionListener(new BackButtonListener(playwindow));
+        // finalize and display the window
+        playWindow.add(mainPanel);
+        playWindow.setVisible(true);
+    }
 
-        //current player
-        currentplayerL = new JLabel("Am Zug: Spieler ");
-        currentplayerL.setFont(new Font("Arial", Font.BOLD,16));
-        JPanel rightpanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        rightpanel.add(currentplayerL);
+    private JFrame createMainWindow() {
+        JFrame playWindow = new JFrame("Ultimate TicTacToe");
+        playWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        playWindow.setSize(600, 600);
+        playWindow.setLocationRelativeTo(null);
+        playWindow.setBackground(Color.DARK_GRAY);
+        return playWindow;
+    }
 
-        //add
-        topleiste.add(leftpanel, BorderLayout.WEST);
-        topleiste.add(rightpanel, BorderLayout.EAST);
+    private JPanel createTopBar(JFrame playWindow) {
+        JPanel topBar = new JPanel(new BorderLayout());
 
-        //gameboard
-        JPanel gameboard = new JPanel(new GridLayout(3,3));
-        gameboard.setBackground(Color.PINK);
+        // back button and panel
+        JButton backButton = new JButton("Back");
+        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        leftPanel.add(backButton);
 
-        // 9x9 groß
+
+        // current player label
+        JLabel currentPlayerL = new JLabel("Am Zug: Spieler ");
+        currentPlayerL.setFont(new Font("Arial", Font.BOLD, 16));
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        rightPanel.add(currentPlayerL);
+
+        // assemble top bar
+        topBar.add(leftPanel, BorderLayout.WEST);
+        topBar.add(rightPanel, BorderLayout.EAST);
+        return topBar;
+    }
+
+    private JPanel createGameBoard() {
+        JPanel gameBoard = new JPanel(new GridLayout(3, 3));
+        gameBoard.setBackground(Color.PINK);
+
         Pos[] positions = Pos.values();
         for (Pos position : positions) {
-            JPanel ticTacToeBoard = new JPanel(new GridLayout(3, 3));
-            ticTacToeBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
-            ticTacToeBoard.setBackground(Color.LIGHT_GRAY);
-
-            // 9x9 klein
-            for (Pos pos : positions) {
-
-                JButton innerCell = new JButton();
-                innerCell.setPreferredSize(new Dimension(20, 20));
-
-
-                String actionCommand = position + "-" + pos;
-                innerCell.setActionCommand(actionCommand);
-
-
-                innerCell.addActionListener(e -> {
-                    String field = e.getActionCommand();
-                    System.out.println("Gedrücktes Feld: " + field);
-                });
-
-                ticTacToeBoard.add(innerCell);
-
-            }
-
-            gameboard.add(ticTacToeBoard);
+            JPanel ticTacToeBoard = createTicTacToeBoard(position);
+            gameBoard.add(ticTacToeBoard);
         }
-
-
-        //adding
-        mainpanel.add(topleiste,BorderLayout.NORTH);
-        mainpanel.add(gameboard, BorderLayout.CENTER);
-
-        playwindow.add(mainpanel);
-        playwindow.setVisible(true);
+        return gameBoard;
     }
+
+    private JPanel createTicTacToeBoard(Pos position) {
+        JPanel ticTacToeBoard = new JPanel(new GridLayout(3, 3));
+        ticTacToeBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
+        ticTacToeBoard.setBackground(Color.LIGHT_GRAY);
+
+        Pos[] positions = Pos.values();
+        for (Pos pos : positions) {
+            JButton innerCell = createInnerCell(position, pos);
+            ticTacToeBoard.add(innerCell);
+        }
+        return ticTacToeBoard;
+    }
+
+    private JButton createInnerCell(Pos position, Pos pos) {
+        JButton innerCell = new JButton();
+        innerCell.setPreferredSize(new Dimension(20, 20));
+
+        String actionCommand = position + "-" + pos;
+        innerCell.setActionCommand(actionCommand);
+
+        innerCell.addActionListener(e -> {
+            String field = e.getActionCommand();
+            System.out.println("Gedrücktes Feld: " + field);
+
+            innerCell.setBackground(Color.yellow);
+            innerCell.setEnabled(false);
+
+        });
+
+        return innerCell;
+    }
+
 
 }
