@@ -15,5 +15,7 @@ public class Main {
         gamefield.getField(Pos.CENTERLEFT).getField(Pos.LOWERLEFT).check(1);
         System.out.println( gamefield.getField(Pos.CENTERLEFT).getCheck());
 
+
+
     }
 }

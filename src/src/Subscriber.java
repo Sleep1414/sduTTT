@@ -1,3 +1,3 @@
 public interface Subscriber {
-    public void update(NeighbourField field );
+    void update(NeighbourField field);
 }

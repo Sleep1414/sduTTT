@@ -94,7 +94,7 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         if(previousState == field.getCheck() && count > 0){
             return previousState;
         }
-        if (!field.isChecked()){
+        if (!field.isChecked() || count > 0){
             return checkState.UNCHECKED;
         }
         if(field.getCheck() != previousState){
@@ -103,26 +103,26 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         if(!field.getNeighbours().containsKey(dir)){
             return switch (dir) {
                 case UPPERLEFT ->
-                        evaluate(previous.neighbours.get(Pos.LOWERRIGHT), field.getCheck(), Pos.LOWERRIGHT, count++, field);
+                        evaluate(previous.neighbours.get(Pos.LOWERRIGHT), field.getCheck(), Pos.LOWERRIGHT, count + 1, field);
                 case UPPERMID ->
-                        evaluate(previous.neighbours.get(Pos.LOWERMID), field.getCheck(), Pos.LOWERMID, count++, field);
+                        evaluate(previous.neighbours.get(Pos.LOWERMID), field.getCheck(), Pos.LOWERMID, count + 1, field);
                 case UPPERRIGHT ->
-                        evaluate(previous.neighbours.get(Pos.LOWERLEFT), field.getCheck(), Pos.LOWERLEFT, count++, field);
+                        evaluate(previous.neighbours.get(Pos.LOWERLEFT), field.getCheck(), Pos.LOWERLEFT, count + 1, field);
                 case CENTERLEFT ->
-                        evaluate(previous.neighbours.get(Pos.CENTERRIGHT), field.getCheck(), Pos.CENTERRIGHT, count++, field);
+                        evaluate(previous.neighbours.get(Pos.CENTERRIGHT), field.getCheck(), Pos.CENTERRIGHT, count + 1, field);
                 case CENTERRIGHT ->
-                        evaluate(previous.neighbours.get(Pos.CENTERLEFT), field.getCheck(), Pos.CENTERLEFT, count++, field);
+                        evaluate(previous.neighbours.get(Pos.CENTERLEFT), field.getCheck(), Pos.CENTERLEFT, count + 1, field);
                 case LOWERLEFT ->
-                        evaluate(previous.neighbours.get(Pos.UPPERRIGHT), field.getCheck(), Pos.UPPERRIGHT, count++, field);
+                        evaluate(previous.neighbours.get(Pos.UPPERRIGHT), field.getCheck(), Pos.UPPERRIGHT, count + 1, field);
                 case LOWERMID ->
-                        evaluate(previous.neighbours.get(Pos.UPPERMID), field.getCheck(), Pos.UPPERMID, count++, field);
+                        evaluate(previous.neighbours.get(Pos.UPPERMID), field.getCheck(), Pos.UPPERMID, count + 1, field);
                 case LOWERRIGHT ->
-                        evaluate(previous.neighbours.get(Pos.UPPERLEFT), field.getCheck(), Pos.UPPERLEFT, count++, field);
+                        evaluate(previous.neighbours.get(Pos.UPPERLEFT), field.getCheck(), Pos.UPPERLEFT, count + 1, field);
                 default -> throw new IllegalArgumentException("Unknown direction: " + this);
             };
 
         }
-        return evaluate(field.neighbours.get(dir), previousState, dir, count++,field);
+        return evaluate(field.neighbours.get(dir), previousState, dir, count + 1 ,field);
 
     }
     @Override
