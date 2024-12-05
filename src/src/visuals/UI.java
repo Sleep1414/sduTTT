@@ -2,6 +2,8 @@ package visuals;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.Flow;
+
 import Direction.Pos;
 
 public class UI {
@@ -51,19 +53,19 @@ public class UI {
 
         // 9x9 groß
         Pos[] positions = Pos.values();
-        for (int i = 0; i < positions.length; i++) {
+        for (Pos position : positions) {
             JPanel ticTacToeBoard = new JPanel(new GridLayout(3, 3));
             ticTacToeBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
             ticTacToeBoard.setBackground(Color.LIGHT_GRAY);
 
             // 9x9 klein
-            for (int j = 0; j < positions.length; j++) {
+            for (Pos pos : positions) {
 
                 JButton innerCell = new JButton();
                 innerCell.setPreferredSize(new Dimension(20, 20));
 
 
-                String actionCommand = positions[i] + "-" + positions[j];
+                String actionCommand = position + "-" + pos;
                 innerCell.setActionCommand(actionCommand);
 
 
