@@ -3,6 +3,7 @@ import Direction.Pos;
 public class NeighbourGraph extends NeighbourFieldField {
 
 
+
     NeighbourGraph() {
         super(null);
         // Assuming the parent is not used or handled elsewhere.

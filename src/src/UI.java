@@ -1,22 +1,27 @@
-package visuals;
 
-import Direction.Pos;
 
 import javax.swing.*;
 import java.awt.*;
+import Direction.Pos;
 
 public class UI {
+    private JFrame playWindow;
+    private NeighbourGraph gameField;
 
-
-    public UI() {
+    public UI(NeighbourGraph gamefield) {
+        this.gameField = gamefield;
         createPlayWindow();
+
+
+
     }
+
 
 
 
     private void createPlayWindow() {
         // window
-        JFrame playWindow = createMainWindow();
+        playWindow = createMainWindow();
 
         // main layout
         JPanel mainPanel = new JPanel(new BorderLayout());
