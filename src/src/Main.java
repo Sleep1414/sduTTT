@@ -1,5 +1,6 @@
 import Direction.Pos;
 
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -13,9 +14,10 @@ public class Main {
 
         UI spielfeld1 = new UI(gamefield);
 
+        spielfeld1.markField(Pos.CENTERMID,Pos.CENTERRIGHT);
 
 
-        System.out.println( gamefield.getField(Pos.CENTERLEFT));
+        //System.out.println( gamefield.getField(Pos.CENTERLEFT));
 
     }
 }

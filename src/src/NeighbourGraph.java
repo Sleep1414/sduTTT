@@ -1,4 +1,5 @@
-import Direction.Pos;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NeighbourGraph extends NeighbourFieldField {
 
@@ -35,16 +36,6 @@ public class NeighbourGraph extends NeighbourFieldField {
         setNeighbours(upperMid,null,null,null,upperLeft,upperRight,null,centerMid,null);
         setNeighbours(upperRight,null,null,null,upperMid,null,centerMid,centerRight,null );
 
-        setNeighbours(centerLeft,null, upperLeft,null,null,centerMid,null,lowerLeft,null);
-        setNeighbours(centerMid, upperLeft, upperMid,upperRight,centerLeft,centerRight,lowerLeft,lowerMid,lowerRight);
-        setNeighbours(centerRight, null,upperRight,null,centerMid,null,null,lowerRight,null);
 
-        setNeighbours(lowerLeft, null, centerLeft,centerMid,null,lowerMid,null,null,null);
-        setNeighbours(lowerMid, null,centerMid,null,lowerLeft, lowerRight,null,null,null);
-        setNeighbours(lowerRight, centerMid,centerRight,null,lowerMid,null,null,null,null);
     }
-
-
-
-
 }

@@ -1,19 +1,19 @@
-
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
 import Direction.Pos;
 
 public class UI {
     private JFrame playWindow;
     private NeighbourGraph gameField;
+    private Map<String, JButton> cellMap;
 
     public UI(NeighbourGraph gamefield) {
         this.gameField = gamefield;
+        this.cellMap = new HashMap<>();
         createPlayWindow();
-
-
-
     }
 
 
@@ -101,7 +101,9 @@ public class UI {
         innerCell.setPreferredSize(new Dimension(20, 20));
 
         String actionCommand = position + "-" + pos;
-        innerCell.setActionCommand(actionCommand);
+        // Button in die Map hinzufügen
+        cellMap.put(actionCommand, innerCell);
+
 
         innerCell.addActionListener(e -> {
             String field = e.getActionCommand();
@@ -113,6 +115,20 @@ public class UI {
         });
 
         return innerCell;
+    }
+
+    public void markField(Pos outerPosition, Pos innerPosition) {
+        // Kombiniere die Positionen zu einem Schlüssel
+        String fieldKey = outerPosition + "-" + innerPosition;
+
+        // Hole den Button aus der Map
+        JButton button = cellMap.get(fieldKey);
+        if (button != null && button.isEnabled()) {
+            button.setBackground(Color.YELLOW); // Markiere das Feld
+            button.setEnabled(false);          // Deaktiviere den Button
+        } else {
+            System.out.println("Feld " + fieldKey + " existiert nicht oder ist bereits markiert.");
+        }
     }
 
 
