@@ -36,7 +36,7 @@ public class UI {
         mainPanel.add(topBar, BorderLayout.NORTH);
         mainPanel.add(gameBoard, BorderLayout.CENTER);
 
-        // finalize and display the window
+        //final
         playWindow.add(mainPanel);
         playWindow.setVisible(true);
     }
@@ -53,23 +53,30 @@ public class UI {
     private JPanel createTopBar(JFrame playWindow) {
         JPanel topBar = new JPanel(new BorderLayout());
 
-        // back button and panel
+        // Back Button und Panel
         JButton backButton = new JButton("Back");
         JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftPanel.add(backButton);
 
+        // ActionListener für den Back-Button hinzufügen
+        backButton.addActionListener(e -> {
+            // Schließe das aktuelle Fenster
+            playWindow.dispose();  // Schließt das Fenster
+            System.out.println("Back-Button gedrückt: Fenster wird geschlossen.");
+        });
 
-        // current player label
+        // Aktuellen Spieler anzeigen
         JLabel currentPlayerL = new JLabel("Am Zug: Spieler ");
         currentPlayerL.setFont(new Font("Arial", Font.BOLD, 16));
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightPanel.add(currentPlayerL);
 
-        // assemble top bar
+        // Hinzufügen der Panels zum TopBar
         topBar.add(leftPanel, BorderLayout.WEST);
         topBar.add(rightPanel, BorderLayout.EAST);
         return topBar;
     }
+
 
     private JPanel createGameBoard() {
         JPanel gameBoard = new JPanel(new GridLayout(3, 3));
@@ -101,35 +108,56 @@ public class UI {
         innerCell.setPreferredSize(new Dimension(20, 20));
 
         String actionCommand = position + "-" + pos;
-        // Button in die Map hinzufügen
         cellMap.put(actionCommand, innerCell);
 
 
+        innerCell.setActionCommand(actionCommand);
         innerCell.addActionListener(e -> {
             String field = e.getActionCommand();
             System.out.println("Gedrücktes Feld: " + field);
 
-            innerCell.setBackground(Color.yellow);
+            innerCell.setBackground(Color.YELLOW);
             innerCell.setEnabled(false);
-
         });
-
         return innerCell;
     }
 
-    public void markField(Pos outerPosition, Pos innerPosition) {
-        // Kombiniere die Positionen zu einem Schlüssel
+    public void markField(Pos outerPosition, Pos innerPosition, boolean whichplayer) {
         String fieldKey = outerPosition + "-" + innerPosition;
 
-        // Hole den Button aus der Map
         JButton button = cellMap.get(fieldKey);
         if (button != null && button.isEnabled()) {
-            button.setBackground(Color.YELLOW); // Markiere das Feld
-            button.setEnabled(false);          // Deaktiviere den Button
+            button.setOpaque(true);  // Stelle sicher, dass der Button die Farbe anzeigt
+            button.setBorderPainted(false); // Deaktiviere den Standardrahmen
+
+            // Setze die Hintergrundfarbe basierend auf dem Spieler
+            if (whichplayer) {
+                button.setBackground(Color.RED);  // Farbe für Spieler 1
+            } else {
+                button.setBackground(Color.BLUE); // Farbe für Spieler 2
+            }
+
+            button.setEnabled(false);  // Deaktiviere den Button
         } else {
             System.out.println("Feld " + fieldKey + " existiert nicht oder ist bereits markiert.");
         }
     }
 
 
+
+    public void markLargeField(Pos outerPosition, boolean player1win) {
+        Color backgroundColor = player1win ? Color.RED : Color.BLUE;
+
+        for (Pos innerPosition : Pos.values()) {
+            String fieldKey = outerPosition + "-" + innerPosition;
+
+            JButton button = cellMap.get(fieldKey);
+            if (button != null && button.isEnabled()) {
+                button.setOpaque(true);
+                button.setBorderPainted(false);
+                button.setBackground(backgroundColor);
+                button.setEnabled(false);
+            }
+        }
+    }
 }

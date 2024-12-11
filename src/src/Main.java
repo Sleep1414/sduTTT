@@ -14,10 +14,11 @@ public class Main {
 
         UI spielfeld1 = new UI(gamefield);
 
-        spielfeld1.markField(Pos.CENTERMID,Pos.CENTERRIGHT);
+        //mark: Player1 == true = Rede
+        //mark: Player2 == false = Blue
 
-
-        //System.out.println( gamefield.getField(Pos.CENTERLEFT));
+        spielfeld1.markField(Pos.CENTERMID, Pos.UPPERRIGHT, false);
+        spielfeld1.markLargeField(Pos.CENTERLEFT, false);
 
     }
 }
