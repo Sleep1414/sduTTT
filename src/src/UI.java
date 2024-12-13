@@ -16,8 +16,10 @@ public class UI {
         createPlayWindow();
     }
 
-
-
+    //true == player1
+    //false == player2
+    boolean whichplayerturn = true;
+    JLabel currentPlayerL;
 
     private void createPlayWindow() {
         // window
@@ -66,7 +68,7 @@ public class UI {
         });
 
         // Aktuellen Spieler anzeigen
-        JLabel currentPlayerL = new JLabel("Am Zug: Spieler ");
+        currentPlayerL= new JLabel("Es beginnt Spieler 1");
         currentPlayerL.setFont(new Font("Arial", Font.BOLD, 16));
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightPanel.add(currentPlayerL);
@@ -115,6 +117,16 @@ public class UI {
         innerCell.addActionListener(e -> {
             String field = e.getActionCommand();
             System.out.println("Gedrücktes Feld: " + field);
+
+            if(whichplayerturn == false){
+                System.out.println("Spieler 1 ist am Zug");
+                currentPlayerL.setText("Am Zug: Spieler 1");
+                whichplayerturn = true;
+            }else{
+                System.out.println("Spieler 2 ist am Zug");
+                currentPlayerL.setText("Am Zug: Spieler 2");
+                whichplayerturn = false;
+            }
 
             innerCell.setBackground(Color.YELLOW);
             innerCell.setEnabled(false);

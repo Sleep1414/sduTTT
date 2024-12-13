@@ -17,8 +17,6 @@ public class Main {
         //mark: Player1 == true = Rede
         //mark: Player2 == false = Blue
 
-        spielfeld1.markField(Pos.CENTERMID, Pos.UPPERRIGHT, false);
-        spielfeld1.markLargeField(Pos.CENTERLEFT, false);
 
     }
 }
