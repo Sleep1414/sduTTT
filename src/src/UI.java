@@ -131,14 +131,14 @@ public class UI {
 
                 if (!whichplayerturn) {
                     // Spieler 1
-                    innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
-                    System.out.println("Spieler 1 ist am Zug");
+                    innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
+                    //System.out.println("Spieler 1 ist am Zug");
                     currentPlayerL.setText("Am Zug: Spieler 2");
                     whichplayerturn = true;
                 } else {
                     // Spieler 2
-                    innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
-                    System.out.println("Spieler 2 ist am Zug");
+                    innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
+                    //System.out.println("Spieler 2 ist am Zug");
                     currentPlayerL.setText("Am Zug: Spieler 1");
                     whichplayerturn = false;
                 }
