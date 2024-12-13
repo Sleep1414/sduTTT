@@ -103,14 +103,23 @@ public class UI {
         ticTacToeBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
         ticTacToeBoard.setBackground(Color.LIGHT_GRAY);
 
+        // Setze den Namen des Panels auf die Position
+        ticTacToeBoard.setName(position.toString()); // Setzt den Namen basierend auf der Position
+
+        // Test: Überprüfen, ob der Name des Panels korrekt gesetzt wurde
+        System.out.println("Setze Namen des Panels auf: " + position.toString());
+
         Pos[] positions = Pos.values();
         for (Pos pos : positions) {
             JLabel innerCell = createInnerCell(position, pos);
             ticTacToeBoard.add(innerCell);
         }
+
+        // Überprüfe den Namen nach der Initialisierung
+        System.out.println("Name des Panels nach Setzen: " + ticTacToeBoard.getName());
+
         return ticTacToeBoard;
     }
-
 
     private JLabel createInnerCell(Pos position, Pos pos) {
         JLabel innerCell = new JLabel();
@@ -122,9 +131,6 @@ public class UI {
         String actionCommand = position + "-" + pos;
         cellMap.put(actionCommand, innerCell);
 
-
-        //funktion wo geschaut wird wo man hinplacen darf
-
         innerCell.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -135,7 +141,8 @@ public class UI {
 
                 if (!whichplayerturn) {
                     System.out.println("Spieler 1 at: " + position+"-"+pos);
-                    nextplayerneedto(pos, position);
+                    nextplayerneedto(pos, position, innerCell.getName());
+                    System.out.println("JPanel Name: " + innerCell.getName());
                     // Spieler 1
                     innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
                     //System.out.println("Spieler 1 ist am Zug");
@@ -144,7 +151,8 @@ public class UI {
 
                 } else {
                     System.out.println("Spieler 2 at: " + position+"-"+pos);
-                    nextplayerneedto(pos, position);
+                    nextplayerneedto(pos, position, innerCell.getName());
+                    System.out.println("JPanel Name: " + innerCell.getName());
                     // Spieler 2
                     innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
                     //System.out.println("Spieler 2 ist am Zug");
@@ -161,55 +169,15 @@ public class UI {
         return innerCell;
     }
 
-    private void nextplayerneedto(Pos pos, Pos position) {
-        //pos = großes feld
-        //position = kleines feld
+    private void nextplayerneedto(Pos pos, Pos position, String name) {
         lastmove = pos;
-        switch(lastmove) {
-            case position.UPPERLEFT:
-                nextmove = Pos.UPPERLEFT;
-                marknextfield(nextmove);
-                System.out.println(nextmove);
-                break;
-            case position.UPPERMID:
-                System.out.println(nextmove = Pos.UPPERMID);
-                nextmove = Pos.UPPERMID;
-                break;
-            case position.UPPERRIGHT:
-                nextmove = Pos.UPPERRIGHT;
-                System.out.println(nextmove);
-                break;
-            case position.CENTERLEFT:
-                nextmove = Pos.UPPERRIGHT;
-                System.out.println(nextmove);
-                break;
-            case position.CENTERMID:
-                nextmove = Pos.CENTERMID;
-                System.out.println(nextmove);
-                break;
-            case position.CENTERRIGHT:
-                System.out.println(nextmove = Pos.CENTERRIGHT);
-                nextmove = Pos.CENTERRIGHT;
-                break;
-            case position.LOWERLEFT:
-                nextmove = Pos.LOWERLEFT;
-                System.out.println(nextmove);
-                break;
-            case position.LOWERMID:
-                nextmove = Pos.LOWERMID;
-                System.out.println(nextmove);
-                break;
-            case position.LOWERRIGHT:
-                nextmove = Pos.LOWERRIGHT;
-                System.out.println(nextmove);
-                break;
-        }
+        nextmove = pos;  // Set nextmove to the same position.
+        System.out.println(nextmove);
+        marknextfield(nextmove, name);
     }
 
-    private void marknextfield(Pos nextmove) {
-
-
-
+    private void marknextfield(Pos nextmove, String name) {
+        System.out.println("Name des Panels: " + name);
     }
 
 }
