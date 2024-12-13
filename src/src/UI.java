@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -169,6 +168,7 @@ public class UI {
         switch(lastmove) {
             case position.UPPERLEFT:
                 nextmove = Pos.UPPERLEFT;
+                marknextfield(nextmove);
                 System.out.println(nextmove);
                 break;
             case position.UPPERMID:
@@ -206,6 +206,10 @@ public class UI {
         }
     }
 
+    private void marknextfield(Pos nextmove) {
 
+
+
+    }
 
 }
