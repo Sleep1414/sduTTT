@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +11,8 @@ import Direction.Pos;
 public class UI {
     private JFrame playWindow;
     private NeighbourGraph gameField;
-    private Map<String, JButton> cellMap;
+    private Map<String, JLabel> cellMap;
+
 
     public UI(NeighbourGraph gamefield) {
         this.gameField = gamefield;
@@ -101,84 +104,50 @@ public class UI {
 
         Pos[] positions = Pos.values();
         for (Pos pos : positions) {
-            JButton innerCell = createInnerCell(position, pos);
+            JLabel innerCell = createInnerCell(position, pos);
             ticTacToeBoard.add(innerCell);
         }
         return ticTacToeBoard;
     }
 
-    private JButton createInnerCell(Pos position, Pos pos) {
-        JButton innerCell = new JButton();
-        innerCell.setPreferredSize(new Dimension(20, 20));
+
+    private JLabel createInnerCell(Pos position, Pos pos) {
+        JLabel innerCell = new JLabel();
+        innerCell.setHorizontalAlignment(SwingConstants.CENTER);
+        innerCell.setOpaque(true);
+        innerCell.setBackground(Color.WHITE); // Hintergrundfarbe
+        innerCell.setBorder(BorderFactory.createLineBorder(Color.GRAY)); // Rahmen
 
         String actionCommand = position + "-" + pos;
         cellMap.put(actionCommand, innerCell);
 
-        innerCell.addActionListener(e -> {
-            String field = e.getActionCommand();
-            System.out.println("Gedrücktes Feld: " + field);
+        innerCell.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!innerCell.getText().isEmpty()) {
+                    // Feld bereits belegt, keine Aktion
+                    return;
+                }
 
-            if (!whichplayerturn) {
-                // Spieler 1
-                innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
-                UIManager.put("Button.disabledText", Color.BLACK); // Deaktivierter Text wird schwarz
-                innerCell.setEnabled(false);
-                currentPlayerL.setText("Am Zug: Spieler 1");
-                System.out.println("Spieler 1 ist am Zug");
-                whichplayerturn = true;
-            } else {
-                // Spieler 2
-                innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
-                UIManager.put("Button.disabledText", Color.BLACK); // Deaktivierter Text wird schwarz
-                innerCell.setEnabled(false);
-                currentPlayerL.setText("Am Zug: Spieler 2");
-                System.out.println("Spieler 2 ist am Zug");
-                whichplayerturn = false;
+                if (!whichplayerturn) {
+                    // Spieler 1
+                    innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
+                    System.out.println("Spieler 1 ist am Zug");
+                    currentPlayerL.setText("Am Zug: Spieler 2");
+                    whichplayerturn = true;
+                } else {
+                    // Spieler 2
+                    innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
+                    System.out.println("Spieler 2 ist am Zug");
+                    currentPlayerL.setText("Am Zug: Spieler 1");
+                    whichplayerturn = false;
+                }
+
+                // Label nach dem Setzen des Texts nicht mehr klickbar machen
+                innerCell.removeMouseListener(this);
             }
-
-            // Stil anpassen, damit Text immer sichtbar bleibt
-            innerCell.setOpaque(false);
-            innerCell.setFocusable(false);
-            innerCell.setContentAreaFilled(false);
         });
 
         return innerCell;
-    }
-
-    public void markField(Pos outerPosition, Pos innerPosition, boolean whichplayer) {
-        String fieldKey = outerPosition + "-" + innerPosition;
-
-        JButton button = cellMap.get(fieldKey);
-        if (button != null && button.isEnabled()) {
-            button.setOpaque(true);  // Stelle sicher, dass der Button die Farbe anzeigt
-            button.setBorderPainted(false); // Deaktiviere den Standardrahmen
-
-            // Setze die Hintergrundfarbe basierend auf dem Spieler
-            if (whichplayer) {
-                button.setBackground(Color.RED);  // Farbe für Spieler 1
-            } else {
-                button.setBackground(Color.BLUE); // Farbe für Spieler 2
-            }
-
-            button.setEnabled(false);  // Deaktiviere den Button
-        } else {
-            System.out.println("Feld " + fieldKey + " existiert nicht oder ist bereits markiert.");
-        }
-    }
-
-    public void markLargeField(Pos outerPosition, boolean player1win) {
-        Color backgroundColor = player1win ? Color.RED : Color.BLUE;
-
-        for (Pos innerPosition : Pos.values()) {
-            String fieldKey = outerPosition + "-" + innerPosition;
-
-            JButton button = cellMap.get(fieldKey);
-            if (button != null && button.isEnabled()) {
-                button.setOpaque(true);
-                button.setBorderPainted(false);
-                button.setBackground(backgroundColor);
-                button.setEnabled(false);
-            }
-        }
     }
 }
