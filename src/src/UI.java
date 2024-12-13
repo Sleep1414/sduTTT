@@ -139,26 +139,23 @@ public class UI {
                     return;
                 }
 
+                // Verwende den Namen des Panels (ticTacToeBoard), nicht des Labels (innerCell)
+                String panelName = ((JPanel) innerCell.getParent()).getName();
+                System.out.println("JPanel Name: " + panelName);  // Gibt den Namen des Panels aus
+
                 if (!whichplayerturn) {
-                    System.out.println("Spieler 1 at: " + position+"-"+pos);
-                    nextplayerneedto(pos, position, innerCell.getName());
-                    System.out.println("JPanel Name: " + innerCell.getName());
-                    // Spieler 1
+                    System.out.println("Spieler 1 at: " + position + "-" + pos);
+                    nextplayerneedto(pos, position, panelName);
                     innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
-                    //System.out.println("Spieler 1 ist am Zug");
                     currentPlayerL.setText("Am Zug: Spieler 2");
                     whichplayerturn = true;
 
                 } else {
-                    System.out.println("Spieler 2 at: " + position+"-"+pos);
-                    nextplayerneedto(pos, position, innerCell.getName());
-                    System.out.println("JPanel Name: " + innerCell.getName());
-                    // Spieler 2
+                    System.out.println("Spieler 2 at: " + position + "-" + pos);
+                    nextplayerneedto(pos, position, panelName);
                     innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
-                    //System.out.println("Spieler 2 ist am Zug");
                     currentPlayerL.setText("Am Zug: Spieler 1");
                     whichplayerturn = false;
-
                 }
 
                 // Label nach dem Setzen des Texts nicht mehr klickbar machen
@@ -169,15 +166,14 @@ public class UI {
         return innerCell;
     }
 
-    private void nextplayerneedto(Pos pos, Pos position, String name) {
-        lastmove = pos;
-        nextmove = pos;  // Set nextmove to the same position.
-        System.out.println(nextmove);
-        marknextfield(nextmove, name);
+    private void markfield(Pos nextmove) {
+
     }
 
-    private void marknextfield(Pos nextmove, String name) {
-        System.out.println("Name des Panels: " + name);
-    }
 
-}
+    private void nextplayerneedto (Pos pos, Pos position, String name){
+            lastmove = pos;
+            nextmove = pos;  // Set nextmove to the same position.
+            System.out.println(nextmove);
+        }
+    }
