@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ public class UI {
     //false == player2
     boolean whichplayerturn = true;
     JLabel currentPlayerL;
+
 
     private void createPlayWindow() {
         // window
@@ -112,25 +114,34 @@ public class UI {
         String actionCommand = position + "-" + pos;
         cellMap.put(actionCommand, innerCell);
 
-
-        innerCell.setActionCommand(actionCommand);
         innerCell.addActionListener(e -> {
             String field = e.getActionCommand();
             System.out.println("Gedrücktes Feld: " + field);
 
-            if(whichplayerturn == false){
-                System.out.println("Spieler 1 ist am Zug");
+            if (!whichplayerturn) {
+                // Spieler 1
+                innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
+                UIManager.put("Button.disabledText", Color.BLACK); // Deaktivierter Text wird schwarz
+                innerCell.setEnabled(false);
                 currentPlayerL.setText("Am Zug: Spieler 1");
+                System.out.println("Spieler 1 ist am Zug");
                 whichplayerturn = true;
-            }else{
-                System.out.println("Spieler 2 ist am Zug");
+            } else {
+                // Spieler 2
+                innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
+                UIManager.put("Button.disabledText", Color.BLACK); // Deaktivierter Text wird schwarz
+                innerCell.setEnabled(false);
                 currentPlayerL.setText("Am Zug: Spieler 2");
+                System.out.println("Spieler 2 ist am Zug");
                 whichplayerturn = false;
             }
 
-            innerCell.setBackground(Color.YELLOW);
-            innerCell.setEnabled(false);
+            // Stil anpassen, damit Text immer sichtbar bleibt
+            innerCell.setOpaque(false);
+            innerCell.setFocusable(false);
+            innerCell.setContentAreaFilled(false);
         });
+
         return innerCell;
     }
 
@@ -154,8 +165,6 @@ public class UI {
             System.out.println("Feld " + fieldKey + " existiert nicht oder ist bereits markiert.");
         }
     }
-
-
 
     public void markLargeField(Pos outerPosition, boolean player1win) {
         Color backgroundColor = player1win ? Color.RED : Color.BLUE;
