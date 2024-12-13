@@ -163,43 +163,45 @@ public class UI {
     }
 
     private void nextplayerneedto(Pos pos, Pos position) {
+        //pos = großes feld
+        //position = kleines feld
         lastmove = pos;
         switch(lastmove) {
             case position.UPPERLEFT:
                 nextmove = Pos.UPPERLEFT;
-                System.out.println(nextmove);// Wenn X in UPPERLEFT im kleinen Spielfeld spielt, darf Y in UPPERLEFT im großen Spielfeld spielen
+                System.out.println(nextmove);
                 break;
             case position.UPPERMID:
                 System.out.println(nextmove = Pos.UPPERMID);
-                nextmove = Pos.UPPERMID;// Wenn X in UPPERMID im kleinen Spielfeld spielt, darf Y in UPPERMID im großen Spielfeld spielen
+                nextmove = Pos.UPPERMID;
                 break;
             case position.UPPERRIGHT:
                 nextmove = Pos.UPPERRIGHT;
-                System.out.println(nextmove);// Wenn X in UPPERRIGHT im kleinen Spielfeld spielt, darf Y in UPPERRIGHT im großen Spielfeld spielen
+                System.out.println(nextmove);
                 break;
             case position.CENTERLEFT:
                 nextmove = Pos.UPPERRIGHT;
-                System.out.println(nextmove);// Wenn X in CENTERLEFT im kleinen Spielfeld spielt, darf Y in CENTERLEFT im großen Spielfeld spielen
+                System.out.println(nextmove);
                 break;
             case position.CENTERMID:
                 nextmove = Pos.CENTERMID;
-                System.out.println(nextmove);// Wenn X in CENTERMID im kleinen Spielfeld spielt, darf Y in CENTERMID im großen Spielfeld spielen
+                System.out.println(nextmove);
                 break;
             case position.CENTERRIGHT:
                 System.out.println(nextmove = Pos.CENTERRIGHT);
-                nextmove = Pos.CENTERRIGHT;// Wenn X in CENTERRIGHT im kleinen Spielfeld spielt, darf Y in CENTERRIGHT im großen Spielfeld spielen
+                nextmove = Pos.CENTERRIGHT;
                 break;
             case position.LOWERLEFT:
                 nextmove = Pos.LOWERLEFT;
-                System.out.println(nextmove);// Wenn X in LOWERLEFT im kleinen Spielfeld spielt, darf Y in LOWERLEFT im großen Spielfeld spielen
+                System.out.println(nextmove);
                 break;
             case position.LOWERMID:
                 nextmove = Pos.LOWERMID;
-                System.out.println(nextmove);// Wenn X in LOWERMID im kleinen Spielfeld spielt, darf Y in LOWERMID im großen Spielfeld spielen
+                System.out.println(nextmove);
                 break;
             case position.LOWERRIGHT:
                 nextmove = Pos.LOWERRIGHT;
-                System.out.println(nextmove);// Wenn X in LOWERRIGHT im kleinen Spielfeld spielt, darf Y in LOWERRIGHT im großen Spielfeld spielen
+                System.out.println(nextmove);
                 break;
         }
     }
