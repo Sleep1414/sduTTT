@@ -104,10 +104,9 @@ public class UI {
         ticTacToeBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
         ticTacToeBoard.setBackground(Color.LIGHT_GRAY);
 
-        // Setze den Namen des Panels auf die Position
         ticTacToeBoard.setName(position.toString()); // Setzt den Namen basierend auf der Position
 
-        // Test: Überprüfen, ob der Name des Panels korrekt gesetzt wurde
+        //Überprüfen, ob der Name des Panels korrekt gesetzt wurde
         System.out.println("Setze Namen des Panels auf: " + position.toString());
 
         Pos[] positions = Pos.values();
@@ -118,7 +117,6 @@ public class UI {
 
         // Überprüfe den Namen nach der Initialisierung
         System.out.println("Name des Panels nach Setzen: " + ticTacToeBoard.getName());
-
         return ticTacToeBoard;
     }
 
@@ -126,8 +124,8 @@ public class UI {
         JLabel innerCell = new JLabel();
         innerCell.setHorizontalAlignment(SwingConstants.CENTER);
         innerCell.setOpaque(true);
-        innerCell.setBackground(Color.WHITE); // Hintergrundfarbe
-        innerCell.setBorder(BorderFactory.createLineBorder(Color.GRAY)); // Rahmen
+        innerCell.setBackground(Color.WHITE);
+        innerCell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
         String actionCommand = position + "-" + pos;
         cellMap.put(actionCommand, innerCell);
@@ -136,13 +134,13 @@ public class UI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!innerCell.getText().isEmpty()) {
-                    // Feld bereits belegt, keine Aktion
+                    //nichts passiert
                     return;
                 }
 
-                // Verwende den Namen des Panels (ticTacToeBoard), nicht des Labels (innerCell)
+
                 String panelName = ((JPanel) innerCell.getParent()).getName();
-                System.out.println("JPanel Name: " + panelName);  // Gibt den Namen des Panels aus
+                System.out.println("JPanel Name: " + panelName);
 
                 if (!whichplayerturn) {
                     System.out.println("Spieler 1 at: " + position + "-" + pos);
@@ -152,7 +150,6 @@ public class UI {
                     innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
                     currentPlayerL.setText("Am Zug: Spieler 2");
                     whichplayerturn = true;
-
                 } else {
                     System.out.println("Spieler 2 at: " + position + "-" + pos);
                     clearMarks();
@@ -162,8 +159,6 @@ public class UI {
                     currentPlayerL.setText("Am Zug: Spieler 1");
                     whichplayerturn = false;
                 }
-
-                // Label nach dem Setzen des Texts nicht mehr klickbar machen
                 innerCell.removeMouseListener(this);
             }
         });
@@ -208,8 +203,7 @@ public class UI {
             String key = entry.getKey();
             JLabel label = entry.getValue();
 
-            // Wenn der key des Labels mit dem Panelnamen übereinstimmt, markiere es
-            if (key.startsWith(panelName)) {
+            if (!key.startsWith(panelName)) {
                 label.setBackground(color);
             }
         }
@@ -219,14 +213,14 @@ public class UI {
         // Durchlaufe alle Zellen und setze deren Hintergrundfarbe zurück
         for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
             JLabel label = entry.getValue();
-            label.setBackground(Color.WHITE); // Setze die Hintergrundfarbe zurück
+            label.setBackground(Color.WHITE);
         }
     }
 
 
     private void nextplayerneedto (Pos pos, Pos position, String name){
             lastmove = pos;
-            nextmove = pos;  // Set nextmove to the same position.
+            nextmove = pos;
             System.out.println(nextmove);
         }
     }
