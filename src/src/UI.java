@@ -210,7 +210,6 @@ public class UI {
     }
 
     private void clearMarks() {
-        // Durchlaufe alle Zellen und setze deren Hintergrundfarbe zurück
         for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
             JLabel label = entry.getValue();
             label.setBackground(Color.WHITE);
