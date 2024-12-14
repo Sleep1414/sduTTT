@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -145,14 +146,18 @@ public class UI {
 
                 if (!whichplayerturn) {
                     System.out.println("Spieler 1 at: " + position + "-" + pos);
+                    clearMarks();
                     nextplayerneedto(pos, position, panelName);
+                    markpanel(nextmove);
                     innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
                     currentPlayerL.setText("Am Zug: Spieler 2");
                     whichplayerturn = true;
 
                 } else {
                     System.out.println("Spieler 2 at: " + position + "-" + pos);
+                    clearMarks();
                     nextplayerneedto(pos, position, panelName);
+                    markpanel(nextmove);
                     innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
                     currentPlayerL.setText("Am Zug: Spieler 1");
                     whichplayerturn = false;
@@ -166,8 +171,56 @@ public class UI {
         return innerCell;
     }
 
-    private void markfield(Pos nextmove) {
+    public void markpanel(Pos nextmove) {
+        switch(nextmove){
+            case Pos.UPPERLEFT:
+                markCell("UPPERLEFT", Color.lightGray);
+                break;
+            case Pos.UPPERMID:
+                markCell("UPPERMID", Color.lightGray);
+                break;
+            case Pos.UPPERRIGHT:
+                markCell("UPPERRIGHT", Color.lightGray);
+                break;
+            case Pos.CENTERLEFT:
+                markCell("CENTERLEFT", Color.lightGray);
+                break;
+            case Pos.CENTERMID:
+                markCell("CENTERMID", Color.lightGray);
+                break;
+            case Pos.CENTERRIGHT:
+                markCell("CENTERRIGHT", Color.lightGray);
+                break;
+            case Pos.LOWERLEFT:
+                markCell("LOWERLEFT", Color.lightGray);
+                break;
+            case Pos.LOWERMID:
+                markCell("LOWERMID", Color.lightGray);
+                break;
+            case Pos.LOWERRIGHT:
+                markCell("LOWERRIGHT", Color.lightGray);
+                break;
+        }
+    }
 
+    private void markCell(String panelName, Color color) {
+        for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
+            String key = entry.getKey();
+            JLabel label = entry.getValue();
+
+            // Wenn der key des Labels mit dem Panelnamen übereinstimmt, markiere es
+            if (key.startsWith(panelName)) {
+                label.setBackground(color);
+            }
+        }
+    }
+
+    private void clearMarks() {
+        // Durchlaufe alle Zellen und setze deren Hintergrundfarbe zurück
+        for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
+            JLabel label = entry.getValue();
+            label.setBackground(Color.WHITE); // Setze die Hintergrundfarbe zurück
+        }
     }
 
 
