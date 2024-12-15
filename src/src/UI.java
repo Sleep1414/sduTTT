@@ -130,6 +130,7 @@ public class UI {
         String actionCommand = position + "-" + pos;
         cellMap.put(actionCommand, innerCell);
 
+
         innerCell.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -169,42 +170,54 @@ public class UI {
     public void markpanel(Pos nextmove) {
         switch(nextmove){
             case Pos.UPPERLEFT:
-                markCell("UPPERLEFT", Color.lightGray);
+                marknotplayble("UPPERLEFT", Color.lightGray);
                 break;
             case Pos.UPPERMID:
-                markCell("UPPERMID", Color.lightGray);
+                marknotplayble("UPPERMID", Color.lightGray);
                 break;
             case Pos.UPPERRIGHT:
-                markCell("UPPERRIGHT", Color.lightGray);
+                marknotplayble("UPPERRIGHT", Color.lightGray);
                 break;
             case Pos.CENTERLEFT:
-                markCell("CENTERLEFT", Color.lightGray);
+                marknotplayble("CENTERLEFT", Color.lightGray);
                 break;
             case Pos.CENTERMID:
-                markCell("CENTERMID", Color.lightGray);
+                marknotplayble("CENTERMID", Color.lightGray);
                 break;
             case Pos.CENTERRIGHT:
-                markCell("CENTERRIGHT", Color.lightGray);
+                marknotplayble("CENTERRIGHT", Color.lightGray);
                 break;
             case Pos.LOWERLEFT:
-                markCell("LOWERLEFT", Color.lightGray);
+                marknotplayble("LOWERLEFT", Color.lightGray);
                 break;
             case Pos.LOWERMID:
-                markCell("LOWERMID", Color.lightGray);
+                marknotplayble("LOWERMID", Color.lightGray);
                 break;
             case Pos.LOWERRIGHT:
-                markCell("LOWERRIGHT", Color.lightGray);
+                marknotplayble("LOWERRIGHT", Color.lightGray);
                 break;
         }
     }
 
-    private void markCell(String panelName, Color color) {
+    private void marknotplayble(String panelName, Color color) {
         for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
             String key = entry.getKey();
             JLabel label = entry.getValue();
 
             if (!key.startsWith(panelName)) {
-                label.setBackground(color);
+                    label.setBackground(color);
+            }
+        }
+    }
+
+    public void markcell(String panelName, Color color) {
+        for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
+            String key = entry.getKey();
+            JLabel label = entry.getValue();
+
+            if (key.startsWith(panelName)) {
+                    label.setBackground(color);
+                    label.setEnabled(false);
             }
         }
     }
