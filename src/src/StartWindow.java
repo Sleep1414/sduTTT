@@ -1,3 +1,5 @@
+import Direction.Pos;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -41,6 +43,10 @@ public class StartWindow extends JFrame {
                 UI spielfeld1 = new UI();
                 mediator.registerComponent(gamefield);
                 mediator.registerComponent(spielfeld1);
+
+
+                //testmarkierung
+                spielfeld1.markcell(String.valueOf(Pos.UPPERLEFT), Color.blue);
 
                 dispose();
             }

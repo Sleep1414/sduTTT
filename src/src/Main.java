@@ -15,9 +15,6 @@ public class Main {
 
         //NeighbourGraph gamefield = new NeighbourGraph();
 
-        //UI spielfeld1 = new UI(gamefield);
-
-
 
 
 

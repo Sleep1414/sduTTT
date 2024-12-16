@@ -204,16 +204,24 @@ public class UI implements Component {
             JLabel label = entry.getValue();
 
             if (!key.startsWith(panelName)) {
+
+                if(label.getBackground() == Color.red || label.getBackground() == Color.blue) {
+                    //mark nicht lightgray
+                }else{
                     label.setBackground(color);
+                }
+
             }
         }
     }
 
+
+
+    //großes feld markieren für test
     public void markcell(String panelName, Color color) {
         for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
             String key = entry.getKey();
             JLabel label = entry.getValue();
-
             if (key.startsWith(panelName)) {
                     label.setBackground(color);
                     label.setEnabled(false);
@@ -221,14 +229,24 @@ public class UI implements Component {
         }
     }
 
+
+    //markiere alle marks außer rot & blau
     private void clearMarks() {
         for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
             JLabel label = entry.getValue();
-            label.setBackground(Color.WHITE);
+
+            if(label.getBackground() == Color.red || label.getBackground() == Color.blue) {
+                //ändere nicht die farbe, die soll bei blau/rot bleiben
+                System.out.println("clear nicht)");
+            }else {
+                label.setBackground(Color.WHITE);
+            }
+
         }
     }
 
 
+    //wohin muss der nächste player setzten
     private void nextplayerneedto (Pos pos, Pos position, String name){
             lastmove = pos;
             nextmove = pos;
