@@ -203,14 +203,12 @@ public class UI implements Component {
             String key = entry.getKey();
             JLabel label = entry.getValue();
 
-            if (!key.startsWith(panelName)) {
+            // Wenn die Zelle nicht zu dem Panel gehört und nicht mit x oder o markiert ist
+            if (!key.startsWith(panelName) &&
+                    !label.getBackground().equals(Color.RED) &&
+                    !label.getBackground().equals(Color.BLUE)) {
 
-                if(label.getBackground() == Color.red || label.getBackground() == Color.blue) {
-                    //mark nicht lightgray
-                }else{
-                    label.setBackground(color);
-                }
-
+                label.setBackground(color); // Grau setzen
             }
         }
     }
@@ -222,9 +220,15 @@ public class UI implements Component {
         for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
             String key = entry.getKey();
             JLabel label = entry.getValue();
+
             if (key.startsWith(panelName)) {
-                    label.setBackground(color);
-                    label.setEnabled(false);
+                // Setze die Hintergrundfarbe je nach Spielerfarbe
+                if (color.equals(Color.RED)) {
+                    label.setBackground(Color.RED); // Farbe für Spieler 1 (x)
+                } else if (color.equals(Color.BLUE)) {
+                    label.setBackground(Color.BLUE); // Farbe für Spieler 2 (o)
+                }
+                label.setEnabled(false); // Zelle deaktivieren
             }
         }
     }
@@ -235,13 +239,14 @@ public class UI implements Component {
         for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
             JLabel label = entry.getValue();
 
-            if(label.getBackground() == Color.red || label.getBackground() == Color.blue) {
-                //ändere nicht die farbe, die soll bei blau/rot bleiben
-                System.out.println("clear nicht)");
-            }else {
-                label.setBackground(Color.WHITE);
+            // Wenn die Hintergrundfarbe rot (x) oder blau (o) ist, überspringe die Änderung
+            if (label.getBackground().equals(Color.RED) || label.getBackground().equals(Color.BLUE)) {
+                System.out.println("clear nicht für markierte Zellen (x/o)");
+                continue;
             }
 
+            // Ansonsten auf Weiß zurücksetzen
+            label.setBackground(Color.WHITE);
         }
     }
 
