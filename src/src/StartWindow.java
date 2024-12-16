@@ -47,6 +47,7 @@ public class StartWindow extends JFrame {
 
                 //testmarkierung
                 spielfeld1.markcell(String.valueOf(Pos.UPPERLEFT), Color.blue);
+                spielfeld1.markcell(String.valueOf(Pos.UPPERRIGHT), Color.red);
 
                 dispose();
             }
