@@ -35,8 +35,13 @@ public class StartWindow extends JFrame {
         JButton startButton = new JButton("Spiel starten");
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+                ConcretMediator mediator = new ConcretMediator();
                 NeighbourGraph gamefield = new NeighbourGraph();
-                UI spielfeld1 = new UI(gamefield);
+                UI spielfeld1 = new UI();
+                mediator.registerComponent(gamefield);
+                mediator.registerComponent(spielfeld1);
+
                 dispose();
             }
         });

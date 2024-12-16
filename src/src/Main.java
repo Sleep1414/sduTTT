@@ -16,11 +16,7 @@ public class Main {
         //NeighbourGraph gamefield = new NeighbourGraph();
 
         //UI spielfeld1 = new UI(gamefield);
-        ConcretMediator mediator = new ConcretMediator();
-        NeighbourGraph gamefield = new NeighbourGraph();
-        UI spielfeld1 = new UI();
-        mediator.registerComponent(gamefield);
-        mediator.registerComponent(spielfeld1);
+
 
 
 
