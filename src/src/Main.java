@@ -8,17 +8,17 @@ public class Main {
       //NeighbourField nei = new NeighbourField();
         //System.out.println(nei.isChecked());
 
+        StartWindow startWindow = new StartWindow();
+        startWindow.setVisible(true);
 
+        //NeighbourGraph gamefield = new NeighbourGraph();
 
-        NeighbourGraph gamefield = new NeighbourGraph();
-
-        UI spielfeld1 = new UI(gamefield);
+        //UI spielfeld1 = new UI(gamefield);
 
         //mark: Player1 == true = Rede
         //mark: Player2 == false = Blue
 
-        spielfeld1.markField(Pos.CENTERMID, Pos.UPPERRIGHT, false);
-        spielfeld1.markLargeField(Pos.CENTERLEFT, false);
+
 
     }
 }
