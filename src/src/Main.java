@@ -9,13 +9,16 @@ public class Main {
     public static void main(String[] args) {
       //NeighbourField nei = new NeighbourField();
         //System.out.println(nei.isChecked());
-
-
-
+        ConcretMediator mediator = new ConcretMediator();
         NeighbourGraph gamefield = new NeighbourGraph();
+        UI spielfeld1 = new UI();
+        mediator.registerComponent(gamefield);
+        mediator.registerComponent(spielfeld1);
 
-        UI spielfeld1 = new UI(gamefield);
-        //mark: Player1 == true = Rede
+
+
+
+        //mark: Player1 == true = Red
         //mark: Player2 == false = Blue
 
 

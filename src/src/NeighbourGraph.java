@@ -3,9 +3,9 @@ import Direction.Pos;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NeighbourGraph extends NeighbourFieldField {
+public class NeighbourGraph extends NeighbourFieldField implements Component{
 
-
+    protected Mediator mediator;
 
     NeighbourGraph() {
         super(null);
@@ -39,5 +39,16 @@ public class NeighbourGraph extends NeighbourFieldField {
         setNeighbours(upperRight,null,null,null,upperMid,null,centerMid,centerRight,null );
 
 
+    }
+
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    @Override
+    public String getName() {
+        return "NeighbourGraph";
     }
 }

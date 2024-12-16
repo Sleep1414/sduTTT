@@ -8,14 +8,13 @@ import java.util.Map;
 
 import Direction.Pos;
 
-public class UI {
+public class UI implements Component {
     private JFrame playWindow;
-    private NeighbourGraph gameField;
     private Map<String, JLabel> cellMap;
+    private Mediator mediator;
 
 
-    public UI(NeighbourGraph gamefield) {
-        this.gameField = gamefield;
+    public UI() {
         this.cellMap = new HashMap<>();
         createPlayWindow();
     }
@@ -235,6 +234,16 @@ public class UI {
             nextmove = pos;
             System.out.println(nextmove);
         }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+       this.mediator = mediator;
     }
+
+    @Override
+    public String getName() {
+        return "UI";
+    }
+}
 
     

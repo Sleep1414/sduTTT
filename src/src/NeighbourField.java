@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public  class NeighbourField  {
+public  class NeighbourField {
     protected Map<Pos, NeighbourField> neighbours;
     protected ArrayList <Subscriber> subscribers;
+
+
 
     enum checkState{ PLAYER1, PLAYER2, UNCHECKED}
     protected checkState check = checkState.UNCHECKED ;
