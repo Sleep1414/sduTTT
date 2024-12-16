@@ -9,6 +9,13 @@ public class Main {
     public static void main(String[] args) {
       //NeighbourField nei = new NeighbourField();
         //System.out.println(nei.isChecked());
+
+        StartWindow startWindow = new StartWindow();
+        startWindow.setVisible(true);
+
+        //NeighbourGraph gamefield = new NeighbourGraph();
+
+        //UI spielfeld1 = new UI(gamefield);
         ConcretMediator mediator = new ConcretMediator();
         NeighbourGraph gamefield = new NeighbourGraph();
         UI spielfeld1 = new UI();
