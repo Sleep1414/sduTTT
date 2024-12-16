@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +11,8 @@ import Direction.Pos;
 public class UI {
     private JFrame playWindow;
     private NeighbourGraph gameField;
-    private Map<String, JButton> cellMap;
+    private Map<String, JLabel> cellMap;
+
 
     public UI(NeighbourGraph gamefield) {
         this.gameField = gamefield;
@@ -16,7 +20,12 @@ public class UI {
         createPlayWindow();
     }
 
-
+    //true == player1
+    //false == player2
+    boolean whichplayerturn = true;
+    JLabel currentPlayerL;
+    Pos lastmove;
+    Pos nextmove;
 
 
     private void createPlayWindow() {
@@ -66,7 +75,7 @@ public class UI {
         });
 
         // Aktuellen Spieler anzeigen
-        JLabel currentPlayerL = new JLabel("Am Zug: Spieler ");
+        currentPlayerL= new JLabel("Es beginnt Spieler 1");
         currentPlayerL.setFont(new Font("Arial", Font.BOLD, 16));
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightPanel.add(currentPlayerL);
@@ -95,69 +104,137 @@ public class UI {
         ticTacToeBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
         ticTacToeBoard.setBackground(Color.LIGHT_GRAY);
 
+        ticTacToeBoard.setName(position.toString()); // Setzt den Namen basierend auf der Position
+
+        //Überprüfen, ob der Name des Panels korrekt gesetzt wurde
+        System.out.println("Setze Namen des Panels auf: " + position.toString());
+
         Pos[] positions = Pos.values();
         for (Pos pos : positions) {
-            JButton innerCell = createInnerCell(position, pos);
+            JLabel innerCell = createInnerCell(position, pos);
             ticTacToeBoard.add(innerCell);
         }
+
+        // Überprüfe den Namen nach der Initialisierung
+        System.out.println("Name des Panels nach Setzen: " + ticTacToeBoard.getName());
         return ticTacToeBoard;
     }
 
-    private JButton createInnerCell(Pos position, Pos pos) {
-        JButton innerCell = new JButton();
-        innerCell.setPreferredSize(new Dimension(20, 20));
+    private JLabel createInnerCell(Pos position, Pos pos) {
+        JLabel innerCell = new JLabel();
+        innerCell.setHorizontalAlignment(SwingConstants.CENTER);
+        innerCell.setOpaque(true);
+        innerCell.setBackground(Color.WHITE);
+        innerCell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
         String actionCommand = position + "-" + pos;
         cellMap.put(actionCommand, innerCell);
 
 
-        innerCell.setActionCommand(actionCommand);
-        innerCell.addActionListener(e -> {
-            String field = e.getActionCommand();
-            System.out.println("Gedrücktes Feld: " + field);
+        innerCell.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!innerCell.getText().isEmpty()) {
+                    //nichts passiert
+                    return;
+                }
 
-            innerCell.setBackground(Color.YELLOW);
-            innerCell.setEnabled(false);
+
+                String panelName = ((JPanel) innerCell.getParent()).getName();
+                System.out.println("JPanel Name: " + panelName);
+
+                if (!whichplayerturn) {
+                    System.out.println("Spieler 1 at: " + position + "-" + pos);
+                    clearMarks();
+                    nextplayerneedto(pos, position, panelName);
+                    markpanel(nextmove);
+                    innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
+                    currentPlayerL.setText("Am Zug: Spieler 2");
+                    whichplayerturn = true;
+                } else {
+                    System.out.println("Spieler 2 at: " + position + "-" + pos);
+                    clearMarks();
+                    nextplayerneedto(pos, position, panelName);
+                    markpanel(nextmove);
+                    innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
+                    currentPlayerL.setText("Am Zug: Spieler 1");
+                    whichplayerturn = false;
+                }
+                innerCell.removeMouseListener(this);
+            }
         });
+
         return innerCell;
     }
 
-    public void markField(Pos outerPosition, Pos innerPosition, boolean whichplayer) {
-        String fieldKey = outerPosition + "-" + innerPosition;
+    public void markpanel(Pos nextmove) {
+        switch(nextmove){
+            case Pos.UPPERLEFT:
+                marknotplayble("UPPERLEFT", Color.lightGray);
+                break;
+            case Pos.UPPERMID:
+                marknotplayble("UPPERMID", Color.lightGray);
+                break;
+            case Pos.UPPERRIGHT:
+                marknotplayble("UPPERRIGHT", Color.lightGray);
+                break;
+            case Pos.CENTERLEFT:
+                marknotplayble("CENTERLEFT", Color.lightGray);
+                break;
+            case Pos.CENTERMID:
+                marknotplayble("CENTERMID", Color.lightGray);
+                break;
+            case Pos.CENTERRIGHT:
+                marknotplayble("CENTERRIGHT", Color.lightGray);
+                break;
+            case Pos.LOWERLEFT:
+                marknotplayble("LOWERLEFT", Color.lightGray);
+                break;
+            case Pos.LOWERMID:
+                marknotplayble("LOWERMID", Color.lightGray);
+                break;
+            case Pos.LOWERRIGHT:
+                marknotplayble("LOWERRIGHT", Color.lightGray);
+                break;
+        }
+    }
 
-        JButton button = cellMap.get(fieldKey);
-        if (button != null && button.isEnabled()) {
-            button.setOpaque(true);  // Stelle sicher, dass der Button die Farbe anzeigt
-            button.setBorderPainted(false); // Deaktiviere den Standardrahmen
+    private void marknotplayble(String panelName, Color color) {
+        for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
+            String key = entry.getKey();
+            JLabel label = entry.getValue();
 
-            // Setze die Hintergrundfarbe basierend auf dem Spieler
-            if (whichplayer) {
-                button.setBackground(Color.RED);  // Farbe für Spieler 1
-            } else {
-                button.setBackground(Color.BLUE); // Farbe für Spieler 2
+            if (!key.startsWith(panelName)) {
+                    label.setBackground(color);
             }
+        }
+    }
 
-            button.setEnabled(false);  // Deaktiviere den Button
-        } else {
-            System.out.println("Feld " + fieldKey + " existiert nicht oder ist bereits markiert.");
+    public void markcell(String panelName, Color color) {
+        for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
+            String key = entry.getKey();
+            JLabel label = entry.getValue();
+
+            if (key.startsWith(panelName)) {
+                    label.setBackground(color);
+                    label.setEnabled(false);
+            }
+        }
+    }
+
+    private void clearMarks() {
+        for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
+            JLabel label = entry.getValue();
+            label.setBackground(Color.WHITE);
         }
     }
 
 
-
-    public void markLargeField(Pos outerPosition, boolean player1win) {
-        Color backgroundColor = player1win ? Color.RED : Color.BLUE;
-
-        for (Pos innerPosition : Pos.values()) {
-            String fieldKey = outerPosition + "-" + innerPosition;
-
-            JButton button = cellMap.get(fieldKey);
-            if (button != null && button.isEnabled()) {
-                button.setOpaque(true);
-                button.setBorderPainted(false);
-                button.setBackground(backgroundColor);
-                button.setEnabled(false);
-            }
+    private void nextplayerneedto (Pos pos, Pos position, String name){
+            lastmove = pos;
+            nextmove = pos;
+            System.out.println(nextmove);
         }
     }
-}
+
+    
