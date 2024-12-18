@@ -38,11 +38,9 @@ public class StartWindow extends JFrame {
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                ConcretMediator mediator = new ConcretMediator();
+
                 NeighbourGraph gamefield = new NeighbourGraph();
                 UI spielfeld1 = new UI();
-                mediator.registerComponent(gamefield);
-                mediator.registerComponent(spielfeld1);
 
 
                 //testmarkierung

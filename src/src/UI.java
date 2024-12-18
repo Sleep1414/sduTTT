@@ -8,10 +8,10 @@ import java.util.Map;
 
 import Direction.Pos;
 
-public class UI implements Component {
+public class UI implements Subscriber{
     private JFrame playWindow;
     private Map<String, JLabel> cellMap;
-    private Mediator mediator;
+
 
 
     public UI() {
@@ -258,14 +258,10 @@ public class UI implements Component {
             System.out.println(nextmove);
         }
 
-    @Override
-    public void setMediator(Mediator mediator) {
-       this.mediator = mediator;
-    }
 
     @Override
-    public String getName() {
-        return "UI";
+    public void update(NeighbourField field) {
+
     }
 }
 

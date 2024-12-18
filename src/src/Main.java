@@ -1,5 +1,6 @@
 import Direction.Pos;
 
+import javax.swing.*;
 import java.awt.*;
 
 
@@ -14,8 +15,6 @@ public class Main {
         startWindow.setVisible(true);
 
         //NeighbourGraph gamefield = new NeighbourGraph();
-
-
 
 
         //mark: Player1 == true = Red
