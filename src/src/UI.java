@@ -199,15 +199,28 @@ public class UI implements Component {
     }
 
     private void marknotplayble(String panelName, Color color) {
+        // Prüfen, ob das Zielpanel (panelName) bereits markiert wurde
+        boolean isPanelMarked = cellMap.entrySet().stream()
+                .filter(entry -> entry.getKey().startsWith(panelName))
+                .anyMatch(entry ->
+                        entry.getValue().getBackground().equals(Color.RED) ||
+                                entry.getValue().getBackground().equals(Color.BLUE)
+                );
+
+        // Wenn das Zielpanel markiert ist, alle Markierungen entfernen (freie Auswahl)
+        if (isPanelMarked) {
+            clearMarks(); // Entfernt alle grauen Markierungen
+            return;
+        }
+
+        // Standardlogik: Felder außerhalb des Zielpanels grau markieren
         for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
             String key = entry.getKey();
             JLabel label = entry.getValue();
 
-            // Wenn die Zelle nicht zu dem Panel gehört und nicht mit x oder o markiert ist
             if (!key.startsWith(panelName) &&
                     !label.getBackground().equals(Color.RED) &&
                     !label.getBackground().equals(Color.BLUE)) {
-
                 label.setBackground(color); // Grau setzen
             }
         }
@@ -258,15 +271,22 @@ public class UI implements Component {
             System.out.println(nextmove);
         }
 
+
+
     @Override
     public void setMediator(Mediator mediator) {
-       this.mediator = mediator;
+        this.mediator = mediator;
     }
+
+
 
     @Override
     public String getName() {
         return "UI";
     }
+
+
+
 }
 
     
