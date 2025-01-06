@@ -8,7 +8,7 @@ import java.util.Map;
 
 import Direction.Pos;
 
-public class UI implements Subscriber{
+public class UI implements Subscriber {
     private JFrame playWindow;
     private Map<String, JLabel> cellMap;
     private NeighbourGraph gamefield;
@@ -75,7 +75,7 @@ public class UI implements Subscriber{
         });
 
         // Aktuellen Spieler anzeigen
-        currentPlayerL= new JLabel("Es beginnt Spieler 1");
+        currentPlayerL = new JLabel("Es beginnt Spieler 1");
         currentPlayerL.setFont(new Font("Arial", Font.BOLD, 16));
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightPanel.add(currentPlayerL);
@@ -140,14 +140,11 @@ public class UI implements Subscriber{
                 }
 
 
-
-
                 String panelName = ((JPanel) innerCell.getParent()).getName();
                 System.out.println("JPanel Name: " + panelName);
-                if(innerCell.getBackground() == Color.lightGray){
+                if (innerCell.getBackground() == Color.lightGray) {
                     System.out.println("player set wrong");
-                }
-                else if (!whichplayerturn) {
+                } else if (!whichplayerturn) {
                     System.out.println("Spieler 1 at: " + position + "-" + pos);
                     gamefield.getField(position).getField(pos).check(1);
                     clearMarks();
@@ -176,7 +173,7 @@ public class UI implements Subscriber{
     }
 
     public void markpanel(Pos nextmove) {
-        switch(nextmove){
+        switch (nextmove) {
             case Pos.UPPERLEFT:
                 marknotplayble("UPPERLEFT", Color.lightGray);
                 break;
@@ -223,7 +220,6 @@ public class UI implements Subscriber{
     }
 
 
-
     //großes feld markieren für test
     public void markcell(String panelName, Color color) {
         for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
@@ -261,17 +257,17 @@ public class UI implements Subscriber{
 
 
     //wohin muss der nächste player setzten
-    private void nextplayerneedto (Pos pos, Pos position, String name){
-            lastmove = pos;
-            nextmove = pos;
-            System.out.println(nextmove);
-        }
+    private void nextplayerneedto(Pos pos, Pos position, String name) {
+        lastmove = pos;
+        nextmove = pos;
+        System.out.println(nextmove);
+    }
 
 
     @Override
     public void update(NeighbourField field) {
-        if(field.getGraphPostion() == null){
-            System.out.print("GAME END \n \n "+whichplayerturn);
+        if (field.getGraphPostion() == null) {
+            System.out.print("GAME END \n \n " + whichplayerturn);
             //add end game func
             return;
         }

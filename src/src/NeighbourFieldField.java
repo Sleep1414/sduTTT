@@ -5,28 +5,29 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class NeighbourFieldField extends NeighbourField implements Subscriber {
-    HashMap <Pos,NeighbourField> childField;
+    HashMap<Pos, NeighbourField> childField;
     int highestpossiblechecknumber = 3;
+
     NeighbourFieldField(Subscriber parent, Pos graphPosition) {
         super(parent, graphPosition);
-         // Assuming the parent is not used or handled elsewhere.
+        // Assuming the parent is not used or handled elsewhere.
 
         // Initialize the grid (3x3 Tic-Tac-Toe)
         childField = new HashMap<>();
-        if(this.getClass() != NeighbourFieldField.class){
+        if (this.getClass() != NeighbourFieldField.class) {
             return;
         }
 
         // Create NeighbourField objects for each position
-        NeighbourField upperLeft = new NeighbourField(this, Pos.UPPERLEFT,graphPostion);
-        NeighbourField upperMid = new NeighbourField(this, Pos.UPPERMID,graphPostion);
-        NeighbourField upperRight = new NeighbourField(this, Pos.UPPERRIGHT,graphPostion);
-        NeighbourField centerLeft = new NeighbourField(this, Pos.CENTERLEFT,graphPostion);
-        NeighbourField centerMid = new NeighbourField(this, Pos.CENTERMID,graphPostion);
-        NeighbourField centerRight = new NeighbourField(this, Pos.CENTERRIGHT,graphPostion);
-        NeighbourField lowerLeft = new NeighbourField(this, Pos.LOWERLEFT,graphPostion);
-        NeighbourField lowerMid = new NeighbourField(this, Pos.LOWERMID,graphPostion);
-        NeighbourField lowerRight = new NeighbourField(this, Pos.LOWERLEFT,graphPostion);
+        NeighbourField upperLeft = new NeighbourField(this, Pos.UPPERLEFT, graphPostion);
+        NeighbourField upperMid = new NeighbourField(this, Pos.UPPERMID, graphPostion);
+        NeighbourField upperRight = new NeighbourField(this, Pos.UPPERRIGHT, graphPostion);
+        NeighbourField centerLeft = new NeighbourField(this, Pos.CENTERLEFT, graphPostion);
+        NeighbourField centerMid = new NeighbourField(this, Pos.CENTERMID, graphPostion);
+        NeighbourField centerRight = new NeighbourField(this, Pos.CENTERRIGHT, graphPostion);
+        NeighbourField lowerLeft = new NeighbourField(this, Pos.LOWERLEFT, graphPostion);
+        NeighbourField lowerMid = new NeighbourField(this, Pos.LOWERMID, graphPostion);
+        NeighbourField lowerRight = new NeighbourField(this, Pos.LOWERLEFT, graphPostion);
 
         // Put these fields in the map
         childField.put(Pos.UPPERLEFT, upperLeft);
@@ -40,67 +41,83 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         childField.put(Pos.LOWERRIGHT, lowerRight);
 
         // Set neighbors for each NeighbourField
-        setNeighbours(upperLeft,null,null,null,null,upperMid,null,centerLeft,centerMid);
-        setNeighbours(upperMid,null,null,null,upperLeft,upperRight,null,centerMid,null);
-        setNeighbours(upperRight,null,null,null,upperMid,null,centerMid,centerRight,null );
+        setNeighbours(upperLeft, null, null, null, null, upperMid, null, centerLeft, centerMid);
+        setNeighbours(upperMid, null, null, null, upperLeft, upperRight, null, centerMid, null);
+        setNeighbours(upperRight, null, null, null, upperMid, null, centerMid, centerRight, null);
 
-        setNeighbours(centerLeft,null, upperLeft,null,null,centerMid,null,lowerLeft,null);
-        setNeighbours(centerMid, upperLeft, upperMid,upperRight,centerLeft,centerRight,lowerLeft,lowerMid,lowerRight);
-        setNeighbours(centerRight, null,upperRight,null,centerMid,null,null,lowerRight,null);
+        setNeighbours(centerLeft, null, upperLeft, null, null, centerMid, null, lowerLeft, null);
+        setNeighbours(centerMid, upperLeft, upperMid, upperRight, centerLeft, centerRight, lowerLeft, lowerMid, lowerRight);
+        setNeighbours(centerRight, null, upperRight, null, centerMid, null, null, lowerRight, null);
 
-        setNeighbours(lowerLeft, null, centerLeft,centerMid,null,lowerMid,null,null,null);
-        setNeighbours(lowerMid, null,centerMid,null,lowerLeft, lowerRight,null,null,null);
-        setNeighbours(lowerRight, centerMid,centerRight,null,lowerMid,null,null,null,null);
+        setNeighbours(lowerLeft, null, centerLeft, centerMid, null, lowerMid, null, null, null);
+        setNeighbours(lowerMid, null, centerMid, null, lowerLeft, lowerRight, null, null, null);
+        setNeighbours(lowerRight, centerMid, centerRight, null, lowerMid, null, null, null, null);
     }
 
     // Helper method to set neighbors for a NeighbourField
     protected void setNeighbours(NeighbourField field, NeighbourField upperLeft, NeighbourField upperMid, NeighbourField upperRight, NeighbourField left,
-                               NeighbourField right, NeighbourField lowerLeft, NeighbourField lowerMid,
-                               NeighbourField lowerRight) {
+                                 NeighbourField right, NeighbourField lowerLeft, NeighbourField lowerMid,
+                                 NeighbourField lowerRight) {
 
-        if (upperLeft != null) { field.putNeighbour(Pos.UPPERLEFT, upperLeft);}
-        if (upperMid != null) {field.putNeighbour(Pos.UPPERMID, upperMid);}
-        if (upperRight != null) {field.putNeighbour(Pos.UPPERRIGHT, upperRight);}
-        if (right != null) {field.putNeighbour(Pos.CENTERRIGHT, right);}
-        if (lowerRight != null) {field.putNeighbour(Pos.LOWERRIGHT, lowerRight);}
-        if (lowerMid != null) {field.putNeighbour(Pos.LOWERMID, lowerMid);}
-        if (lowerLeft != null) {field.putNeighbour(Pos.LOWERLEFT, lowerLeft);}
-        if (left != null) {field.putNeighbour(Pos.CENTERLEFT, left);}
+        if (upperLeft != null) {
+            field.putNeighbour(Pos.UPPERLEFT, upperLeft);
+        }
+        if (upperMid != null) {
+            field.putNeighbour(Pos.UPPERMID, upperMid);
+        }
+        if (upperRight != null) {
+            field.putNeighbour(Pos.UPPERRIGHT, upperRight);
+        }
+        if (right != null) {
+            field.putNeighbour(Pos.CENTERRIGHT, right);
+        }
+        if (lowerRight != null) {
+            field.putNeighbour(Pos.LOWERRIGHT, lowerRight);
+        }
+        if (lowerMid != null) {
+            field.putNeighbour(Pos.LOWERMID, lowerMid);
+        }
+        if (lowerLeft != null) {
+            field.putNeighbour(Pos.LOWERLEFT, lowerLeft);
+        }
+        if (left != null) {
+            field.putNeighbour(Pos.CENTERLEFT, left);
+        }
 
 
     }
 
-    checkState evaluate(NeighbourField newSetField){
-        if( !newSetField.isChecked()){
+    checkState evaluate(NeighbourField newSetField) {
+        if (!newSetField.isChecked()) {
             return checkState.UNCHECKED;
         }
         Iterator<Map.Entry<Pos, NeighbourField>> fields = newSetField.getNeighbours().entrySet().iterator();
 
-        for (int i = 0 ; i < highestpossiblechecknumber; i++) {
+        for (int i = 0; i < highestpossiblechecknumber; i++) {
             var nextfield = fields.next();
-           if(nextfield.getValue() == null){
-               i--;
-               continue;
-           }
-           var state = evaluate(nextfield.getValue(), nextfield.getValue().getCheck(), nextfield.getKey(),  0,newSetField);
-           if( checkState.UNCHECKED != state){
-               return state;
-           }
+            if (nextfield.getValue() == null) {
+                i--;
+                continue;
+            }
+            var state = evaluate(nextfield.getValue(), nextfield.getValue().getCheck(), nextfield.getKey(), 0, newSetField);
+            if (checkState.UNCHECKED != state) {
+                return state;
+            }
         }
         return checkState.UNCHECKED;
-        }
+    }
 
-    private checkState evaluate(NeighbourField field, checkState previousState, Pos dir, int count,NeighbourField previous){
-        if(previousState == field.getCheck() && count > 0){
+    private checkState evaluate(NeighbourField field, checkState previousState, Pos dir, int count, NeighbourField previous) {
+        if (previousState == field.getCheck() && count > 0) {
             return previousState;
         }
-        if (!field.isChecked() || count > 0){
+        if (!field.isChecked() || count > 0) {
             return checkState.UNCHECKED;
         }
-        if(field.getCheck() != previousState){
+        if (field.getCheck() != previousState) {
             return checkState.UNCHECKED;
         }
-        if(!field.getNeighbours().containsKey(dir)){
+        if (!field.getNeighbours().containsKey(dir)) {
             return switch (dir) {
                 case UPPERLEFT ->
                         evaluate(previous.neighbours.get(Pos.LOWERRIGHT), field.getCheck(), Pos.LOWERRIGHT, count + 1, field);
@@ -122,21 +139,25 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
             };
 
         }
-        return evaluate(field.neighbours.get(dir), previousState, dir, count + 1 ,field);
+        return evaluate(field.neighbours.get(dir), previousState, dir, count + 1, field);
 
     }
+
     @Override
-    public NeighbourField getField(Pos direction){
+    public NeighbourField getField(Pos direction) {
         return childField.get(direction);
     }
 
     @Override
     public void update(NeighbourField field) {
-           checkState evalcheck = evaluate(field);
-          if( evalcheck == checkState.PLAYER1 ){check(1);}
-          else if (evalcheck == checkState.PLAYER2 ){check(2);}
+        checkState evalcheck = evaluate(field);
+        if (evalcheck == checkState.PLAYER1) {
+            check(1);
+        } else if (evalcheck == checkState.PLAYER2) {
+            check(2);
+        }
 
-          }
     }
+}
 
 

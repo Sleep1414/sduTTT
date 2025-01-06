@@ -8,7 +8,7 @@ import java.awt.*;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-      //NeighbourField nei = new NeighbourField();
+        //NeighbourField nei = new NeighbourField();
         //System.out.println(nei.isChecked());
 
         StartWindow startWindow = new StartWindow();

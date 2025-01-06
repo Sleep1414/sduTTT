@@ -39,7 +39,6 @@ public class StartWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
 
-
                 UI spielfeld1 = new UI();
 
 
