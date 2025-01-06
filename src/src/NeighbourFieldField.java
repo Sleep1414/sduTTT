@@ -132,7 +132,11 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
 
     @Override
     public void update(NeighbourField field) {
-          this.check = evaluate(field);
+           checkState evalcheck = evaluate(field);
+          if( evalcheck == checkState.PLAYER1 ){check(1);}
+          else if (evalcheck == checkState.PLAYER2 ){check(2);}
+
+          }
     }
 
-}
+

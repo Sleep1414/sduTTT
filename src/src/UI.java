@@ -250,7 +250,7 @@ public class UI implements Subscriber{
 
             // Wenn die Hintergrundfarbe rot (x) oder blau (o) ist, überspringe die Änderung
             if (label.getBackground().equals(Color.RED) || label.getBackground().equals(Color.BLUE)) {
-                System.out.println("clear nicht für markierte Zellen (x/o)");
+                //System.out.println("clear nicht für markierte Zellen (x/o)");
                 continue;
             }
 
@@ -271,7 +271,7 @@ public class UI implements Subscriber{
     @Override
     public void update(NeighbourField field) {
         if(field.getGraphPostion() == null){
-            System.out.print(whichplayerturn);
+            System.out.print("GAME END \n \n "+whichplayerturn);
             //add end game func
             return;
         }
