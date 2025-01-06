@@ -11,11 +11,13 @@ import Direction.Pos;
 public class UI implements Subscriber{
     private JFrame playWindow;
     private Map<String, JLabel> cellMap;
-
+    private NeighbourGraph gamefield;
 
 
     public UI() {
         this.cellMap = new HashMap<>();
+        this.gamefield = new NeighbourGraph();
+        gamefield.addSubscriber(this);
         createPlayWindow();
     }
 

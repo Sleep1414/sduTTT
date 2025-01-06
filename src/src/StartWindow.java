@@ -39,7 +39,7 @@ public class StartWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
 
-                NeighbourGraph gamefield = new NeighbourGraph();
+
                 UI spielfeld1 = new UI();
 
 

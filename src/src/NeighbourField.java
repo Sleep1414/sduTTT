@@ -15,14 +15,11 @@ public  class NeighbourField {
     enum checkState{ PLAYER1, PLAYER2, UNCHECKED}
     protected checkState check = checkState.UNCHECKED ;
 
-    public NeighbourField getField(Pos direction) {
-        return null;
-    }
+
+    public NeighbourField getField(Pos direction){return null;}
 
 
-
-
-    public void notifySubscriber() {
+    void notifySubscriber() {
         for (Subscriber subscriber : subscribers ) {
                 subscriber.update(this);
         }
@@ -36,7 +33,7 @@ public  class NeighbourField {
 
     }
 
-    public void putNeighbour(Pos orientation, NeighbourField field) {
+    void putNeighbour(Pos orientation, NeighbourField field) {
         neighbours.put(orientation, field);
     }
 
@@ -61,5 +58,8 @@ public  class NeighbourField {
 
     public Map<Pos,NeighbourField> getNeighbours() {
         return neighbours;
+    }
+    public void addSubscriber(Subscriber sub){
+        subscribers.add(sub);
     }
 }
