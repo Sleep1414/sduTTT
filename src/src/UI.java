@@ -139,10 +139,14 @@ public class UI implements Subscriber{
                 }
 
 
+
+
                 String panelName = ((JPanel) innerCell.getParent()).getName();
                 System.out.println("JPanel Name: " + panelName);
-
-                if (!whichplayerturn) {
+                if(innerCell.getBackground() == Color.lightGray){
+                    System.out.println("player set wrong");
+                }
+                else if (!whichplayerturn) {
                     System.out.println("Spieler 1 at: " + position + "-" + pos);
                     clearMarks();
                     nextplayerneedto(pos, position, panelName);
