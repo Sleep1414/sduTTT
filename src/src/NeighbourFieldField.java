@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class NeighbourFieldField extends NeighbourField implements Subscriber {
     HashMap <Pos,NeighbourField> childField;
-
+    int highestpossiblechecknumber = 3;
     NeighbourFieldField(NeighbourFieldField parent) {
         super(parent);
          // Assuming the parent is not used or handled elsewhere.
@@ -76,7 +76,7 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         }
         Iterator<Map.Entry<Pos, NeighbourField>> fields = newSetField.getNeighbours().entrySet().iterator();
 
-        for (int i = 0 ; i < 3; i++) {
+        for (int i = 0 ; i < highestpossiblechecknumber; i++) {
             var nextfield = fields.next();
            if(nextfield.getValue() == null){
                i--;
