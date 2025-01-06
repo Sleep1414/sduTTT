@@ -7,20 +7,20 @@ public class NeighbourGraph extends NeighbourFieldField {
 
 
 
-    NeighbourGraph() {
-        super(null);
+    NeighbourGraph(Subscriber parent) {
+        super(parent,null);
         // Assuming the parent is not used or handled elsewhere.
 
         // Create NeighbourField objects for each position
-        NeighbourFieldField upperLeft = new NeighbourFieldField(this);
-        NeighbourFieldField upperMid = new NeighbourFieldField(this);
-        NeighbourFieldField upperRight = new NeighbourFieldField(this);
-        NeighbourFieldField centerLeft = new NeighbourFieldField(this);
-        NeighbourFieldField centerMid = new NeighbourFieldField(this);
-        NeighbourFieldField centerRight = new NeighbourFieldField(this);
-        NeighbourFieldField lowerLeft = new NeighbourFieldField(this);
-        NeighbourFieldField lowerMid = new NeighbourFieldField(this);
-        NeighbourFieldField lowerRight = new NeighbourFieldField(this);
+        NeighbourFieldField upperLeft = new NeighbourFieldField(this,Pos.LOWERLEFT);
+        NeighbourFieldField upperMid = new NeighbourFieldField(this,Pos.LOWERMID);
+        NeighbourFieldField upperRight = new NeighbourFieldField(this,Pos.LOWERRIGHT);
+        NeighbourFieldField centerLeft = new NeighbourFieldField(this,Pos.CENTERLEFT);
+        NeighbourFieldField centerMid = new NeighbourFieldField(this,Pos.CENTERMID);
+        NeighbourFieldField centerRight = new NeighbourFieldField(this,Pos.CENTERRIGHT);
+        NeighbourFieldField lowerLeft = new NeighbourFieldField(this,Pos.LOWERLEFT);
+        NeighbourFieldField lowerMid = new NeighbourFieldField(this,Pos.LOWERMID);
+        NeighbourFieldField lowerRight = new NeighbourFieldField(this,Pos.LOWERRIGHT);
 
         // Put these fields in the map
         childField.put(Pos.UPPERLEFT, upperLeft);
@@ -39,6 +39,17 @@ public class NeighbourGraph extends NeighbourFieldField {
         setNeighbours(upperRight,null,null,null,upperMid,null,centerMid,centerRight,null );
 
 
+
+    }
+    @Override
+    public void update(NeighbourField field) {
+        this.check = evaluate(field);
+        notifyfromlesserField(field);
+    }
+    void notifyfromlesserField(NeighbourField field){
+        for (Subscriber subscriber : subscribers ) {
+            subscriber.update(field);
+        }
     }
 
 }

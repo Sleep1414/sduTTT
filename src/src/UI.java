@@ -16,8 +16,7 @@ public class UI implements Subscriber{
 
     public UI() {
         this.cellMap = new HashMap<>();
-        this.gamefield = new NeighbourGraph();
-        gamefield.addSubscriber(this);
+        this.gamefield = new NeighbourGraph(this);
         createPlayWindow();
     }
 
@@ -150,6 +149,7 @@ public class UI implements Subscriber{
                 }
                 else if (!whichplayerturn) {
                     System.out.println("Spieler 1 at: " + position + "-" + pos);
+                    gamefield.getField(position).getField(pos).check(1);
                     clearMarks();
                     nextplayerneedto(pos, position, panelName);
                     markpanel(nextmove);
@@ -159,6 +159,7 @@ public class UI implements Subscriber{
                     innerCell.removeMouseListener(this);
                 } else {
                     System.out.println("Spieler 2 at: " + position + "-" + pos);
+                    gamefield.getField(position).getField(pos).check(2);
                     clearMarks();
                     nextplayerneedto(pos, position, panelName);
                     markpanel(nextmove);
@@ -269,6 +270,12 @@ public class UI implements Subscriber{
 
     @Override
     public void update(NeighbourField field) {
+        if(field.getGraphPostion() == null){
+            System.out.print(whichplayerturn);
+            //add end game func
+            return;
+        }
+
 
     }
 }

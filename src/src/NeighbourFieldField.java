@@ -7,8 +7,8 @@ import java.util.Map;
 public class NeighbourFieldField extends NeighbourField implements Subscriber {
     HashMap <Pos,NeighbourField> childField;
     int highestpossiblechecknumber = 3;
-    NeighbourFieldField(NeighbourFieldField parent) {
-        super(parent);
+    NeighbourFieldField(Subscriber parent, Pos graphPosition) {
+        super(parent, graphPosition);
          // Assuming the parent is not used or handled elsewhere.
 
         // Initialize the grid (3x3 Tic-Tac-Toe)
@@ -18,15 +18,15 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         }
 
         // Create NeighbourField objects for each position
-        NeighbourField upperLeft = new NeighbourField(this);
-        NeighbourField upperMid = new NeighbourField(this);
-        NeighbourField upperRight = new NeighbourField(this);
-        NeighbourField centerLeft = new NeighbourField(this);
-        NeighbourField centerMid = new NeighbourField(this);
-        NeighbourField centerRight = new NeighbourField(this);
-        NeighbourField lowerLeft = new NeighbourField(this);
-        NeighbourField lowerMid = new NeighbourField(this);
-        NeighbourField lowerRight = new NeighbourField(this);
+        NeighbourField upperLeft = new NeighbourField(this, Pos.UPPERLEFT,graphPostion);
+        NeighbourField upperMid = new NeighbourField(this, Pos.UPPERMID,graphPostion);
+        NeighbourField upperRight = new NeighbourField(this, Pos.UPPERRIGHT,graphPostion);
+        NeighbourField centerLeft = new NeighbourField(this, Pos.CENTERLEFT,graphPostion);
+        NeighbourField centerMid = new NeighbourField(this, Pos.CENTERMID,graphPostion);
+        NeighbourField centerRight = new NeighbourField(this, Pos.CENTERRIGHT,graphPostion);
+        NeighbourField lowerLeft = new NeighbourField(this, Pos.LOWERLEFT,graphPostion);
+        NeighbourField lowerMid = new NeighbourField(this, Pos.LOWERMID,graphPostion);
+        NeighbourField lowerRight = new NeighbourField(this, Pos.LOWERLEFT,graphPostion);
 
         // Put these fields in the map
         childField.put(Pos.UPPERLEFT, upperLeft);
@@ -70,7 +70,7 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
 
     }
 
-    private checkState evaluate(NeighbourField newSetField){
+    checkState evaluate(NeighbourField newSetField){
         if( !newSetField.isChecked()){
             return checkState.UNCHECKED;
         }
@@ -134,4 +134,5 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
     public void update(NeighbourField field) {
           this.check = evaluate(field);
     }
+
 }
