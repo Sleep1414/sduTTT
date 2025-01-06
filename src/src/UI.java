@@ -258,10 +258,14 @@ public class UI implements Subscriber{
             System.out.println(nextmove);
         }
 
+    @Override
+    public void setMediator(Mediator mediator) {
+       this.mediator = mediator;
+    }
 
     @Override
-    public void update(NeighbourField field) {
-
+    public String getName() {
+        return "UI";
     }
 }
 
