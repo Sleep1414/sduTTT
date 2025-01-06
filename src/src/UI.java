@@ -156,6 +156,7 @@ public class UI implements Subscriber{
                     innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
                     currentPlayerL.setText("Am Zug: Spieler 2");
                     whichplayerturn = true;
+                    innerCell.removeMouseListener(this);
                 } else {
                     System.out.println("Spieler 2 at: " + position + "-" + pos);
                     clearMarks();
@@ -164,8 +165,9 @@ public class UI implements Subscriber{
                     innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
                     currentPlayerL.setText("Am Zug: Spieler 1");
                     whichplayerturn = false;
+                    innerCell.removeMouseListener(this);
                 }
-                innerCell.removeMouseListener(this);
+
             }
         });
 
