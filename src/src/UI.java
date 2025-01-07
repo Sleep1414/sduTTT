@@ -1,32 +1,27 @@
+import Direction.Pos;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Direction.Pos;
-
 public class UI implements Subscriber {
-    private JFrame playWindow;
-    private Map<String, JLabel> cellMap;
-    private NeighbourGraph gamefield;
-
-
-    public UI() {
-        this.cellMap = new HashMap<>();
-        this.gamefield = new NeighbourGraph(this);
-        createPlayWindow();
-    }
-
     //true == player1
     //false == player2
     boolean whichplayerturn = true;
     JLabel currentPlayerL;
     Pos lastmove;
     Pos nextmove;
-
+    private JFrame playWindow;
+    private final Map<String, JLabel> cellMap;
+    private final NeighbourGraph gamefield;
+    public UI() {
+        this.cellMap = new HashMap<>();
+        this.gamefield = new NeighbourGraph(this);
+        createPlayWindow();
+    }
 
     private void createPlayWindow() {
         // window
@@ -107,7 +102,7 @@ public class UI implements Subscriber {
         ticTacToeBoard.setName(position.toString()); // Setzt den Namen basierend auf der Position
 
         //Überprüfen, ob der Name des Panels korrekt gesetzt wurde
-        System.out.println("Setze Namen des Panels auf: " + position.toString());
+        System.out.println("Setze Namen des Panels auf: " + position);
 
         Pos[] positions = Pos.values();
         for (Pos pos : positions) {
@@ -140,7 +135,7 @@ public class UI implements Subscriber {
                 }
 
 
-                String panelName = ((JPanel) innerCell.getParent()).getName();
+                String panelName = innerCell.getParent().getName();
                 System.out.println("JPanel Name: " + panelName);
                 if (innerCell.getBackground() == Color.lightGray) {
                     System.out.println("player set wrong");
@@ -205,6 +200,21 @@ public class UI implements Subscriber {
     }
 
     private void marknotplayble(String panelName, Color color) {
+
+        // Prüfen, ob das Zielpanel (panelName) bereits markiert wurde
+        boolean isPanelMarked = cellMap.entrySet().stream()
+                .filter(entry -> entry.getKey().startsWith(panelName))
+                .anyMatch(entry ->
+                        entry.getValue().getBackground().equals(Color.RED) ||
+                                entry.getValue().getBackground().equals(Color.BLUE)
+                );
+        // Wenn das Zielpanel markiert ist, alle Markierungen entfernen (freie Auswahl)
+        if (isPanelMarked) {
+            clearMarks(); // Entfernt alle grauen Markierungen
+            return;
+        }
+
+        // Standardlogik: Felder außerhalb des Zielpanels grau markieren
         for (Map.Entry<String, JLabel> entry : cellMap.entrySet()) {
             String key = entry.getKey();
             JLabel label = entry.getValue();
@@ -269,7 +279,6 @@ public class UI implements Subscriber {
         if (field.getGraphPostion() == null) {
             System.out.print("GAME END \n \n " + whichplayerturn);
             //add end game func
-            return;
         }
 
 
