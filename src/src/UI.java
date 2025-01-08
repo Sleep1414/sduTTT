@@ -1,4 +1,4 @@
-import Direction.Pos;
+/**import Direction.Pos;
 
 import javax.swing.*;
 import java.awt.*;
@@ -283,6 +283,6 @@ public class UI implements Subscriber {
 
 
     }
-}
+}**/
 
     

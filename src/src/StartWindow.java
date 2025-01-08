@@ -39,12 +39,12 @@ public class StartWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
 
-                UI spielfeld1 = new UI();
+                NeighbourGraph spielfeld1 = new NeighbourGraph();
 
 
                 //testmarkierung
-                spielfeld1.markcell(String.valueOf(Pos.UPPERLEFT), Color.blue);
-                spielfeld1.markcell(String.valueOf(Pos.UPPERRIGHT), Color.red);
+                spielfeld1.markcell(Pos.UPPERLEFT, 1);
+                spielfeld1.markcell(Pos.UPPERRIGHT, 2);
 
                 dispose();
             }

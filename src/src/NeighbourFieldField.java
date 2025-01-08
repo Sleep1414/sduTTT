@@ -1,5 +1,7 @@
 import Direction.Pos;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -7,8 +9,9 @@ import java.util.Map;
 public class NeighbourFieldField extends NeighbourField implements Subscriber {
     HashMap<Pos, NeighbourField> childField;
     int highestpossiblechecknumber = 3;
+    private JPanel ticTacToeBoard;
 
-    NeighbourFieldField(Subscriber parent, Pos graphPosition) {
+    NeighbourFieldField(Subscriber parent, Pos graphPosition, JPanel gameBoard) {
         super(parent, graphPosition);
         // Assuming the parent is not used or handled elsewhere.
 
@@ -18,40 +21,50 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
             return;
         }
 
-        // Create NeighbourField objects for each position
-        NeighbourField upperLeft = new NeighbourField(this, Pos.UPPERLEFT, graphPostion);
-        NeighbourField upperMid = new NeighbourField(this, Pos.UPPERMID, graphPostion);
-        NeighbourField upperRight = new NeighbourField(this, Pos.UPPERRIGHT, graphPostion);
-        NeighbourField centerLeft = new NeighbourField(this, Pos.CENTERLEFT, graphPostion);
-        NeighbourField centerMid = new NeighbourField(this, Pos.CENTERMID, graphPostion);
-        NeighbourField centerRight = new NeighbourField(this, Pos.CENTERRIGHT, graphPostion);
-        NeighbourField lowerLeft = new NeighbourField(this, Pos.LOWERLEFT, graphPostion);
-        NeighbourField lowerMid = new NeighbourField(this, Pos.LOWERMID, graphPostion);
-        NeighbourField lowerRight = new NeighbourField(this, Pos.LOWERLEFT, graphPostion);
+        this.ticTacToeBoard = new JPanel(new GridLayout(3, 3));
+        ticTacToeBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
+        ticTacToeBoard.setBackground(Color.LIGHT_GRAY);
 
-        // Put these fields in the map
-        childField.put(Pos.UPPERLEFT, upperLeft);
-        childField.put(Pos.UPPERMID, upperMid);
-        childField.put(Pos.UPPERRIGHT, upperRight);
-        childField.put(Pos.CENTERLEFT, centerLeft);
-        childField.put(Pos.CENTERMID, centerMid);
-        childField.put(Pos.CENTERRIGHT, centerRight);
-        childField.put(Pos.LOWERLEFT, lowerLeft);
-        childField.put(Pos.LOWERMID, lowerMid);
-        childField.put(Pos.LOWERRIGHT, lowerRight);
+        ticTacToeBoard.setName(graphPosition.toString());
 
+        gameBoard.add(ticTacToeBoard);
+
+        Pos[] positions = Pos.values();
+        for (Pos position : positions) {
+            childField.put(position, new NeighbourField(this, position, graphPostion,ticTacToeBoard));
+        }
         // Set neighbors for each NeighbourField
-        setNeighbours(upperLeft, null, null, null, null, upperMid, null, centerLeft, centerMid);
-        setNeighbours(upperMid, null, null, null, upperLeft, upperRight, null, centerMid, null);
-        setNeighbours(upperRight, null, null, null, upperMid, null, centerMid, centerRight, null);
+        setNeighbours(
+                childField.get(Pos.UPPERLEFT), null, null, null, null, childField.get(Pos.UPPERMID), null, childField.get(Pos.CENTERLEFT), childField.get(Pos.CENTERMID)
+        );
+        setNeighbours(
+                childField.get(Pos.UPPERMID), null, null, null, childField.get(Pos.UPPERLEFT), childField.get(Pos.UPPERRIGHT), null, childField.get(Pos.CENTERMID), null
+        );
+        setNeighbours(
+                childField.get(Pos.UPPERRIGHT), null, null, null, childField.get(Pos.UPPERMID), null, childField.get(Pos.CENTERMID), childField.get(Pos.CENTERRIGHT), null
+        );
 
-        setNeighbours(centerLeft, null, upperLeft, null, null, centerMid, null, lowerLeft, null);
-        setNeighbours(centerMid, upperLeft, upperMid, upperRight, centerLeft, centerRight, lowerLeft, lowerMid, lowerRight);
-        setNeighbours(centerRight, null, upperRight, null, centerMid, null, null, lowerRight, null);
+        setNeighbours(
+                childField.get(Pos.CENTERLEFT), null, childField.get(Pos.UPPERLEFT), null, null, childField.get(Pos.CENTERMID), null, childField.get(Pos.LOWERLEFT), null
+        );
+        setNeighbours(
+                childField.get(Pos.CENTERMID), childField.get(Pos.UPPERLEFT), childField.get(Pos.UPPERMID), childField.get(Pos.UPPERRIGHT),
+                childField.get(Pos.CENTERLEFT), childField.get(Pos.CENTERRIGHT), childField.get(Pos.LOWERLEFT), childField.get(Pos.LOWERMID), childField.get(Pos.LOWERRIGHT)
+        );
+        setNeighbours(
+                childField.get(Pos.CENTERRIGHT), null, childField.get(Pos.UPPERRIGHT), null, childField.get(Pos.CENTERMID), null, null, childField.get(Pos.LOWERRIGHT), null
+        );
 
-        setNeighbours(lowerLeft, null, centerLeft, centerMid, null, lowerMid, null, null, null);
-        setNeighbours(lowerMid, null, centerMid, null, lowerLeft, lowerRight, null, null, null);
-        setNeighbours(lowerRight, centerMid, centerRight, null, lowerMid, null, null, null, null);
+        setNeighbours(
+                childField.get(Pos.LOWERLEFT), null, childField.get(Pos.CENTERLEFT), childField.get(Pos.CENTERMID), null, childField.get(Pos.LOWERMID), null, null, null
+        );
+        setNeighbours(
+                childField.get(Pos.LOWERMID), null, childField.get(Pos.CENTERMID), null, childField.get(Pos.LOWERLEFT), childField.get(Pos.LOWERRIGHT), null, null, null
+        );
+        setNeighbours(
+                childField.get(Pos.LOWERRIGHT), childField.get(Pos.CENTERMID), childField.get(Pos.CENTERRIGHT), null, childField.get(Pos.LOWERMID), null, null, null, null
+        );
+
     }
 
     // Helper method to set neighbors for a NeighbourField
@@ -107,6 +120,10 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         return checkState.UNCHECKED;
     }
 
+    public JPanel getTicTacToeBoard() {
+        return ticTacToeBoard;
+    }
+
     private checkState evaluate(NeighbourField field, checkState previousState, Pos dir, int count, NeighbourField previous) {
         if (previousState == field.getCheck() && count > 0) {
             return previousState;
@@ -157,6 +174,16 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
             check(2);
         }
 
+    }
+
+    @Override
+    public void updateplayerturn() {
+        parent.updateplayerturn();
+    }
+
+    @Override
+    public boolean getplayerturn() {
+        return parent.getplayerturn();
     }
 }
 
