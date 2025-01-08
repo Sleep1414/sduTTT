@@ -49,13 +49,13 @@ public class NeighbourField {
                     System.out.println("player set wrong");
                 } else if (!parent.getplayerturn()) {
 
-                    innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
+                    innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">o</span></html>");
                     parent.updateplayerturn();
                     innerCell.removeMouseListener(this);
                     check(2);
                 } else {
 
-                    innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
+                    innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">x</span></html>");
                     parent.updateplayerturn();
                     innerCell.removeMouseListener(this);
                     check(1);

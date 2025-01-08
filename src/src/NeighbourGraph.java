@@ -13,11 +13,12 @@ public class NeighbourGraph extends NeighbourFieldField {
     Pos lastmove;
     Pos nextmove;
     private JLabel currentPlayerL;
+    private JFrame playWindow;
 
     NeighbourGraph() {
         super(null, null, null);
         // window
-        JFrame playWindow = new JFrame("Ultimate TicTacToe");
+        playWindow = new JFrame("Ultimate TicTacToe");
         playWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         playWindow.setSize(600, 600);
         playWindow.setLocationRelativeTo(null);
@@ -105,6 +106,7 @@ public class NeighbourGraph extends NeighbourFieldField {
     public void update(NeighbourField field) {
         if (Objects.equals(field.toString(), "NeighbourFieldField")) {
             this.check = evaluate(field);
+            if(check != checkState.UNCHECKED) {playWindow.dispose();}
         } else {
             clearMarks();
             Pos pos = field.getGraphPostion();
