@@ -104,14 +104,10 @@ public class NeighbourGraph extends NeighbourFieldField {
     @Override
     public void update(NeighbourField field) {
         if (Objects.equals(field.toString(), "NeighbourFieldField")) {
-            if(whichplayerturn){
-            markcell(field.getGraphPostion(),1);}
-            else {markcell(field.getGraphPostion(),2);}
-
             this.check = evaluate(field);
         } else {
             clearMarks();
-            Pos pos = field.getFieldFieldPosition();
+            Pos pos = field.getGraphPostion();
             lastmove = pos;
             nextmove = pos;
             marknotplayble(nextmove, Color.lightGray);
@@ -188,23 +184,9 @@ public class NeighbourGraph extends NeighbourFieldField {
             }
         }
     }
-    //großes feld markieren für test
-    public void markcell(Pos pos, int player) {
 
-            for (Pos position : Pos.values()) {
-                NeighbourField field = getField(pos).getField(position);
-                JLabel label = field.getInnerCell();
 
-                // Setze die Hintergrundfarbe je nach Spielerfarbe
-                if (player == 2) {
-                    label.setBackground(Color.RED); // Farbe für Spieler 1 (x)
-                } else if (player == 1) {
-                    label.setBackground(Color.BLUE); // Farbe für Spieler 2 (o)
-                }
-                label.setEnabled(false); // Zelle deaktivieren
-
-        }
-    }    @Override
+    @Override
     public void updateplayerturn() {
         whichplayerturn = !whichplayerturn;
         if (whichplayerturn){

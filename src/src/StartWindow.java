@@ -42,10 +42,6 @@ public class StartWindow extends JFrame {
                 NeighbourGraph spielfeld1 = new NeighbourGraph();
 
 
-                //testmarkierung
-                spielfeld1.markcell(Pos.UPPERLEFT, 1);
-                spielfeld1.markcell(Pos.UPPERRIGHT, 2);
-
                 dispose();
             }
         });

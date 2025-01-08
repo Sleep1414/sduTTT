@@ -48,15 +48,17 @@ public class NeighbourField {
                 if (innerCell.getBackground() == Color.lightGray) {
                     System.out.println("player set wrong");
                 } else if (!parent.getplayerturn()) {
-                    check(2);
+
                     innerCell.setText("<html><span style=\"color: red; font-size: 20px;\">x</span></html>");
                     parent.updateplayerturn();
                     innerCell.removeMouseListener(this);
+                    check(2);
                 } else {
-                    check(1);
+
                     innerCell.setText("<html><span style=\"color: blue; font-size: 20px;\">o</span></html>");
                     parent.updateplayerturn();
                     innerCell.removeMouseListener(this);
+                    check(1);
                 }
 
             }

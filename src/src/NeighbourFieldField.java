@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class NeighbourFieldField extends NeighbourField implements Subscriber {
     HashMap<Pos, NeighbourField> childField;
-    int highestpossiblechecknumber = 3;
+    int highestPossibleChecknumber = 3;
     private JPanel ticTacToeBoard;
 
     NeighbourFieldField(Subscriber parent, Pos graphPosition, JPanel gameBoard) {
@@ -106,7 +106,7 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         }
         Iterator<Map.Entry<Pos, NeighbourField>> fields = newSetField.getNeighbours().entrySet().iterator();
 
-        for (int i = 0; i < highestpossiblechecknumber; i++) {
+        for (int i = 0; i < highestPossibleChecknumber; i++) {
             var nextfield = fields.next();
             if (nextfield.getValue() == null) {
                 i--;
@@ -159,6 +159,23 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         return evaluate(field.neighbours.get(dir), previousState, dir, count + 1, field);
 
     }
+    //großes feld markieren für test
+    protected void markcell( int player) {
+
+        for (Pos position : Pos.values()) {
+            NeighbourField field = getField(position);
+            JLabel label = field.getInnerCell();
+
+            // Setze die Hintergrundfarbe je nach Spielerfarbe
+            if (player == 2) {
+                label.setBackground(Color.RED); // Farbe für Spieler 1 (x)
+            } else if (player == 1) {
+                label.setBackground(Color.BLUE); // Farbe für Spieler 2 (o)
+            }
+            label.setEnabled(false); // Zelle deaktivieren
+
+        }
+    }
 
     @Override
     public NeighbourField getField(Pos direction) {
@@ -170,9 +187,12 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         checkState evalcheck = evaluate(field);
         if (evalcheck == checkState.PLAYER1) {
             check(1);
+            markcell(1);
         } else if (evalcheck == checkState.PLAYER2) {
             check(2);
+            markcell(2);
         }
+
         parent.update(field);
 
     }
