@@ -104,6 +104,10 @@ public class NeighbourGraph extends NeighbourFieldField {
     @Override
     public void update(NeighbourField field) {
         if (Objects.equals(field.toString(), "NeighbourFieldField")) {
+            if(whichplayerturn){
+            markcell(field.getGraphPostion(),1);}
+            else {markcell(field.getGraphPostion(),2);}
+
             this.check = evaluate(field);
         } else {
             clearMarks();
@@ -115,9 +119,9 @@ public class NeighbourGraph extends NeighbourFieldField {
 
         }
     }
-
     private void clearMarks() {
         for (Map.Entry<Pos, NeighbourField> fieldfield : childField.entrySet()) {
+
             for (Pos position : Pos.values()) {
                 NeighbourField field = fieldfield.getValue().getField(position);
                 JLabel label = field.getInnerCell();
@@ -134,6 +138,25 @@ public class NeighbourGraph extends NeighbourFieldField {
         }
     }
 
+    private void marksnextmove(Pos nextmove) {
+        for (Map.Entry<Pos, NeighbourField> fieldfield : childField.entrySet()) {
+            if (fieldfield.getValue().isChecked()|| fieldfield.getValue().getGraphPostion()==lastmove) {
+                //System.out.println("clear nicht für markierte Zellen (x/o)");
+                continue;
+            }
+            for (Pos position : Pos.values()) {
+                NeighbourField field = fieldfield.getValue().getField(position);
+                JLabel label = field.getInnerCell();
+
+                // Wenn die Hintergrundfarbe rot (x) oder blau (o) ist, überspringe die Änderung
+
+
+                // Ansonsten auf Weiß zurücksetzen
+                label.setBackground(Color.WHITE);
+            }
+        }
+    }
+
     private void marknotplayble(Pos nextmove, Color color) {
 
         // Prüfen, ob das Zielpanel (panelName) bereits markiert wurde
@@ -141,7 +164,7 @@ public class NeighbourGraph extends NeighbourFieldField {
 
         // Wenn das Zielpanel markiert ist, alle Markierungen entfernen (freie Auswahl)
         if (isPanelMarked) {
-            clearMarks(); // Entfernt alle grauen Markierungen
+            marksnextmove(nextmove); // Entfernt alle grauen Markierungen
             return;
         }
 

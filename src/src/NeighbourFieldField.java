@@ -173,6 +173,7 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         } else if (evalcheck == checkState.PLAYER2) {
             check(2);
         }
+        parent.update(field);
 
     }
 
