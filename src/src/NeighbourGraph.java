@@ -104,12 +104,12 @@ public class NeighbourGraph extends NeighbourFieldField {
 
     @Override
     public void update(NeighbourField field) {
-        if (Objects.equals(field.toString(), "NeighbourFieldField")) {
+        if (Objects.equals(field.getClass().getName(), "NeighbourFieldField")) {
             this.check = evaluate(field);
             if(check != checkState.UNCHECKED) {playWindow.dispose();}
-        } else {
+        } else if (Objects.equals(field.getClass().getName(), "NeighbourField")){
             clearMarks();
-            Pos pos = field.getGraphPostion();
+            Pos pos = field.getFieldFieldPosition();
             lastmove = pos;
             nextmove = pos;
             marknotplayble(nextmove, Color.lightGray);
@@ -168,18 +168,20 @@ public class NeighbourGraph extends NeighbourFieldField {
 
         // Standardlogik: Felder außerhalb des Zielpanels grau markieren
         for (Map.Entry<Pos, NeighbourField> fieldfield : childField.entrySet()) {
-            if (fieldfield.getValue().getGraphPostion() == nextmove) {
-                continue;
-            }
+
 
             for (Pos position : Pos.values()) {
                 NeighbourField field = fieldfield.getValue().getField(position);
                 JLabel label = field.getInnerCell();
+                if (fieldfield.getValue().getGraphPostion() == nextmove) {
+                    label.setBackground(Color.WHITE);
 
+                }
                 // Wenn die Zelle nicht zu dem Panel gehört und nicht mit x oder o markiert ist
 
-                if (!label.getBackground().equals(Color.RED) &&
+                else if (!label.getBackground().equals(Color.RED) &&
                         !label.getBackground().equals(Color.BLUE)) {
+
                     label.setBackground(color); // Grau
                 }
 

@@ -206,6 +206,8 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
     public boolean getplayerturn() {
         return parent.getplayerturn();
     }
+
 }
+
 
 
