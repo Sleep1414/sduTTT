@@ -1,4 +1,4 @@
-import Direction.Pos;
+import Neighbourstruct.NeighbourGraph;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,12 +39,8 @@ public class StartWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
 
-                UI spielfeld1 = new UI();
+                NeighbourGraph spielfeld1 = new NeighbourGraph();
 
-
-                //testmarkierung
-                spielfeld1.markcell(String.valueOf(Pos.UPPERLEFT), Color.blue);
-                spielfeld1.markcell(String.valueOf(Pos.UPPERRIGHT), Color.red);
 
                 dispose();
             }
