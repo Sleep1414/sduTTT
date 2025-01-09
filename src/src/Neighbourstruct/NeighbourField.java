@@ -1,4 +1,4 @@
-
+package Neighbourstruct;
 
 import Direction.Pos;
 
@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ public class NeighbourField {
     Pos graphPostion;
 
 
-    enum checkState {PLAYER1, PLAYER2, UNCHECKED}
+    protected enum checkState {PLAYER1, PLAYER2, UNCHECKED}
 
     protected checkState check = checkState.UNCHECKED;
 
@@ -113,13 +112,10 @@ public class NeighbourField {
         return check != checkState.UNCHECKED;
     }
 
-    public checkState getCheck() {
+    protected checkState getCheck() {
         return check;
     }
 
-    public Subscriber getParent() {
-        return parent;
-    }
 
     public Map<Pos, NeighbourField> getNeighbours() {
         return neighbours;

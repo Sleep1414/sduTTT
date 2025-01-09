@@ -1,4 +1,4 @@
-import Direction.Pos;
+import Neighbourstruct.NeighbourGraph;
 
 import javax.swing.*;
 import java.awt.*;

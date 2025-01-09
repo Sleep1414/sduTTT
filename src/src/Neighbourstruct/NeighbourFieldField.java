@@ -1,3 +1,5 @@
+package Neighbourstruct;
+
 import Direction.Pos;
 
 import javax.swing.*;
@@ -9,7 +11,6 @@ import java.util.Map;
 public class NeighbourFieldField extends NeighbourField implements Subscriber {
     HashMap<Pos, NeighbourField> childField;
     int highestPossibleChecknumber = 3;
-    private JPanel ticTacToeBoard;
 
     NeighbourFieldField(Subscriber parent, Pos graphPosition, JPanel gameBoard) {
         super(parent, graphPosition);
@@ -21,7 +22,7 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
             return;
         }
 
-        this.ticTacToeBoard = new JPanel(new GridLayout(3, 3));
+        JPanel ticTacToeBoard = new JPanel(new GridLayout(3, 3));
         ticTacToeBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
         ticTacToeBoard.setBackground(Color.LIGHT_GRAY);
 
@@ -31,9 +32,9 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
 
         Pos[] positions = Pos.values();
         for (Pos position : positions) {
-            childField.put(position, new NeighbourField(this, position, graphPostion,ticTacToeBoard));
+            childField.put(position, new NeighbourField(this, position, graphPostion, ticTacToeBoard));
         }
-        // Set neighbors for each NeighbourField
+        // Set neighbors for each Neighbourstruct.NeighbourField
         setNeighbours(
                 childField.get(Pos.UPPERLEFT), null, null, null, null, childField.get(Pos.UPPERMID), null, childField.get(Pos.CENTERLEFT), childField.get(Pos.CENTERMID)
         );
@@ -67,7 +68,7 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
 
     }
 
-    // Helper method to set neighbors for a NeighbourField
+    // Helper method to set neighbors for a Neighbourstruct.NeighbourField
     protected void setNeighbours(NeighbourField field, NeighbourField upperLeft, NeighbourField upperMid, NeighbourField upperRight, NeighbourField left,
                                  NeighbourField right, NeighbourField lowerLeft, NeighbourField lowerMid,
                                  NeighbourField lowerRight) {
@@ -120,9 +121,6 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         return checkState.UNCHECKED;
     }
 
-    public JPanel getTicTacToeBoard() {
-        return ticTacToeBoard;
-    }
 
     private checkState evaluate(NeighbourField field, checkState previousState, Pos dir, int count, NeighbourField previous) {
         if (previousState == field.getCheck() && count > 0) {

@@ -1,3 +1,5 @@
+package Neighbourstruct;
+
 import Direction.Pos;
 
 import javax.swing.*;
@@ -12,10 +14,10 @@ public class NeighbourGraph extends NeighbourFieldField {
     boolean whichplayerturn = true;
     Pos lastmove;
     Pos nextmove;
-    private JLabel currentPlayerL;
-    private JFrame playWindow;
+    private final JLabel currentPlayerL;
+    private final JFrame playWindow;
 
-    NeighbourGraph() {
+    public NeighbourGraph() {
         super(null, null, null);
         // window
         playWindow = new JFrame("Ultimate TicTacToe");
@@ -36,7 +38,7 @@ public class NeighbourGraph extends NeighbourFieldField {
         leftPanel.add(backButton);
 
         // ActionListener für den Back-Button hinzufügen
-        backButton.addActionListener(e -> {
+        backButton.addActionListener(_ -> {
             // Schließe das aktuelle Fenster
             playWindow.dispose();  // Schließt das Fenster
             System.out.println("Back-Button gedrückt: Fenster wird geschlossen.");
@@ -69,7 +71,7 @@ public class NeighbourGraph extends NeighbourFieldField {
         for (Pos position : positions) {
             childField.put(position, new NeighbourFieldField(this, position, gameBoard));
         }
-        // Set neighbors for each NeighbourField
+        // Set neighbors for each Neighbourstruct.NeighbourField
         setNeighbours(
                 childField.get(Pos.UPPERLEFT), null, null, null, null, childField.get(Pos.UPPERMID), null, childField.get(Pos.CENTERLEFT), childField.get(Pos.CENTERMID)
         );
@@ -104,15 +106,15 @@ public class NeighbourGraph extends NeighbourFieldField {
 
     @Override
     public void update(NeighbourField field) {
-        if (Objects.equals(field.getClass().getName(), "NeighbourFieldField")) {
+        if (Objects.equals(field.getClass().getName(), "Neighbourstruct.NeighbourFieldField")) {
             this.check = evaluate(field);
             if(check != checkState.UNCHECKED) {playWindow.dispose();}
-        } else if (Objects.equals(field.getClass().getName(), "NeighbourField")){
+        } else if (Objects.equals(field.getClass().getName(), "Neighbourstruct.NeighbourField")){
             clearMarks();
             Pos pos = field.getFieldFieldPosition();
             lastmove = pos;
             nextmove = pos;
-            marknotplayble(nextmove, Color.lightGray);
+            marknotplayble(nextmove);
 
 
         }
@@ -138,7 +140,7 @@ public class NeighbourGraph extends NeighbourFieldField {
 
     private void marksnextmove(Pos nextmove) {
         for (Map.Entry<Pos, NeighbourField> fieldfield : childField.entrySet()) {
-            if (fieldfield.getValue().isChecked()|| fieldfield.getValue().getGraphPostion()==lastmove) {
+            if (fieldfield.getValue().isChecked()|| fieldfield.getValue().getGraphPostion()==nextmove) {
                 //System.out.println("clear nicht für markierte Zellen (x/o)");
                 continue;
             }
@@ -155,7 +157,7 @@ public class NeighbourGraph extends NeighbourFieldField {
         }
     }
 
-    private void marknotplayble(Pos nextmove, Color color) {
+    private void marknotplayble(Pos nextmove) {
 
         // Prüfen, ob das Zielpanel (panelName) bereits markiert wurde
         boolean isPanelMarked = getField(nextmove).isChecked();
@@ -182,7 +184,7 @@ public class NeighbourGraph extends NeighbourFieldField {
                 else if (!label.getBackground().equals(Color.RED) &&
                         !label.getBackground().equals(Color.BLUE)) {
 
-                    label.setBackground(color); // Grau
+                    label.setBackground(Color.lightGray); // Grau
                 }
 
             }
