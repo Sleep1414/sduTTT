@@ -15,6 +15,7 @@ public class NeighbourGraph extends NeighbourFieldField {
     Pos lastmove;
     Pos nextmove;
     private final JLabel currentPlayerL;
+    private final JLabel midlabel;
     private final JFrame playWindow;
 
     public NeighbourGraph() {
@@ -49,6 +50,13 @@ public class NeighbourGraph extends NeighbourFieldField {
         currentPlayerL.setFont(new Font("Arial", Font.BOLD, 16));
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightPanel.add(currentPlayerL);
+
+
+        //Mittleres Label
+        midlabel = new JLabel("");
+        midlabel.setFont(new Font("Arial", Font.BOLD, 16));
+        JPanel midPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        midPanel.add(midlabel);
 
         // Hinzufügen der Panels zum TopBar
         topBar.add(leftPanel, BorderLayout.WEST);
@@ -108,7 +116,7 @@ public class NeighbourGraph extends NeighbourFieldField {
     public void update(NeighbourField field) {
         if (Objects.equals(field.getClass().getName(), "Neighbourstruct.NeighbourFieldField")) {
             this.check = evaluate(field);
-            if(check != checkState.UNCHECKED) {playWindow.dispose();}
+            if(check != checkState.UNCHECKED) {midlabel.setText("Game End");}
         } else if (Objects.equals(field.getClass().getName(), "Neighbourstruct.NeighbourField")){
             clearMarks();
             Pos pos = field.getFieldFieldPosition();
