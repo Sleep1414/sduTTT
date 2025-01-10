@@ -123,10 +123,10 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
 
 
     private checkState evaluate(NeighbourField field, checkState previousState, Pos dir, int count, NeighbourField previous) {
-        if (previousState == field.getCheck() && count > 0) {
+        if (previousState == field.getCheck() && count > 1) {
             return previousState;
         }
-        if (!field.isChecked() || count > 0) {
+        if (!field.isChecked() || count > 1) {
             return checkState.UNCHECKED;
         }
         if (field.getCheck() != previousState) {
