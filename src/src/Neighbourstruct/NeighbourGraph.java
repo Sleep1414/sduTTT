@@ -15,7 +15,8 @@ public class NeighbourGraph extends NeighbourFieldField {
     Pos lastmove;
     Pos nextmove;
     private final JLabel currentPlayerL;
-    private final JLabel midlabel;
+    private final JButton middleButton;
+
     private final JFrame playWindow;
 
     public NeighbourGraph() {
@@ -52,14 +53,20 @@ public class NeighbourGraph extends NeighbourFieldField {
         rightPanel.add(currentPlayerL);
 
 
-        //Mittleres Label
-        midlabel = new JLabel("");
-        midlabel.setFont(new Font("Arial", Font.BOLD, 16));
-        JPanel midPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        midPanel.add(midlabel);
+        //Mittlerer Button
+        middleButton = new JButton("restart Game");
+        JPanel middlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        middlePanel.add(middleButton);
+
+        middleButton.addActionListener(e -> {
+            playWindow.dispose();
+            System.out.println("Game wird neu gestartet");
+            NeighbourGraph spielfeld1 = new NeighbourGraph();
+        });
 
         // Hinzufügen der Panels zum TopBar
         topBar.add(leftPanel, BorderLayout.WEST);
+        topBar.add(middlePanel, BorderLayout.CENTER);
         topBar.add(rightPanel, BorderLayout.EAST);
 
         // game board
@@ -116,7 +123,7 @@ public class NeighbourGraph extends NeighbourFieldField {
     public void update(NeighbourField field) {
         if (Objects.equals(field.getClass().getName(), "Neighbourstruct.NeighbourFieldField")) {
             this.check = evaluate(field);
-            if(check != checkState.UNCHECKED) {midlabel.setText("Game End");}
+            //if(check != checkState.UNCHECKED) {midlabel.setText("Game End");}
         } else if (Objects.equals(field.getClass().getName(), "Neighbourstruct.NeighbourField")){
             clearMarks();
             Pos pos = field.getFieldFieldPosition();

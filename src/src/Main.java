@@ -12,7 +12,6 @@ public class Main {
 
 
 
-
         //mark: Player1 == true = Red
         //mark: Player2 == false = Blue
 
