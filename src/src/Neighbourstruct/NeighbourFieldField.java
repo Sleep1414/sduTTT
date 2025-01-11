@@ -1,13 +1,14 @@
 package Neighbourstruct;
 
-import Direction.Pos;
+import Direction.*;
+import org.w3c.dom.ranges.Range;
+
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.awt.font.NumericShaper;
+import java.util.*;
+
 
 public class NeighbourFieldField extends NeighbourField implements Subscriber {
     HashMap<Pos, NeighbourField> childField;
@@ -31,75 +32,43 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
 
         gameBoard.add(ticTacToeBoard);
 
-        Pos[] positions = Pos.values();
-        for (Pos position : positions) {
-            childField.put(position, new NeighbourField(this, position, graphPostion, ticTacToeBoard));
+        Column[] columns = Column.values();
+        Row[] rows = Row.values();
+        for (Column column : columns) {
+            for (Row row : rows) {
+                Pos position = new Pos(column,row);
+                NeighbourField field = new NeighbourField(this, position, graphPostion, ticTacToeBoard);
+                childField.put(position,field);
+            }
         }
-        // Set neighbors for each Neighbourstruct.NeighbourField
-        setNeighbours(
-                childField.get(Pos.UPPERLEFT), null, null, null, null, childField.get(Pos.UPPERMID), null, childField.get(Pos.CENTERLEFT), childField.get(Pos.CENTERMID)
-        );
-        setNeighbours(
-                childField.get(Pos.UPPERMID), null, null, null, childField.get(Pos.UPPERLEFT), childField.get(Pos.UPPERRIGHT), null, childField.get(Pos.CENTERMID), null
-        );
-        setNeighbours(
-                childField.get(Pos.UPPERRIGHT), null, null, null, childField.get(Pos.UPPERMID), null, childField.get(Pos.CENTERMID), childField.get(Pos.CENTERRIGHT), null
-        );
+        childField.forEach( (k,v) -> {setNeighbours(v);});
 
-        setNeighbours(
-                childField.get(Pos.CENTERLEFT), null, childField.get(Pos.UPPERLEFT), null, null, childField.get(Pos.CENTERMID), null, childField.get(Pos.LOWERLEFT), null
-        );
-        setNeighbours(
-                childField.get(Pos.CENTERMID), childField.get(Pos.UPPERLEFT), childField.get(Pos.UPPERMID), childField.get(Pos.UPPERRIGHT),
-                childField.get(Pos.CENTERLEFT), childField.get(Pos.CENTERRIGHT), childField.get(Pos.LOWERLEFT), childField.get(Pos.LOWERMID), childField.get(Pos.LOWERRIGHT)
-        );
-        setNeighbours(
-                childField.get(Pos.CENTERRIGHT), null, childField.get(Pos.UPPERRIGHT), null, childField.get(Pos.CENTERMID), null, null, childField.get(Pos.LOWERRIGHT), null
-        );
 
-        setNeighbours(
-                childField.get(Pos.LOWERLEFT), null, childField.get(Pos.CENTERLEFT), childField.get(Pos.CENTERMID), null, childField.get(Pos.LOWERMID), null, null, null
-        );
-        setNeighbours(
-                childField.get(Pos.LOWERMID), null, childField.get(Pos.CENTERMID), null, childField.get(Pos.LOWERLEFT), childField.get(Pos.LOWERRIGHT), null, null, null
-        );
-        setNeighbours(
-                childField.get(Pos.LOWERRIGHT), childField.get(Pos.CENTERMID), childField.get(Pos.CENTERRIGHT), null, childField.get(Pos.LOWERMID), null, null, null, null
-        );
 
     }
 
     // Helper method to set neighbors for a Neighbourstruct.NeighbourField
-    protected void setNeighbours(NeighbourField field, NeighbourField upperLeft, NeighbourField upperMid, NeighbourField upperRight, NeighbourField left,
-                                 NeighbourField right, NeighbourField lowerLeft, NeighbourField lowerMid,
-                                 NeighbourField lowerRight) {
+    protected void setNeighbours(NeighbourField field) {
+        Pos coords = getFieldFieldPosition();
+        int column = coords.column.ordinal();
+        int row = coords.row.ordinal();
+        int addedNumericValue = column + row;
+        boolean setDiagonal = true;
+        if(!(addedNumericValue % 2 == 0)){
+            setDiagonal= false;
+        }
+        for ( int x = -1 ; x <= 1; x++) {
+            for (int y = 0 ; y < Column.values().length; y++) {
+                int neighbourcolumn = column+x;
+                int neighbourrow= row+x;
 
-        if (upperLeft != null) {
-            field.putNeighbour(Pos.UPPERLEFT, upperLeft);
-        }
-        if (upperMid != null) {
-            field.putNeighbour(Pos.UPPERMID, upperMid);
-        }
-        if (upperRight != null) {
-            field.putNeighbour(Pos.UPPERRIGHT, upperRight);
-        }
-        if (right != null) {
-            field.putNeighbour(Pos.CENTERRIGHT, right);
-        }
-        if (lowerRight != null) {
-            field.putNeighbour(Pos.LOWERRIGHT, lowerRight);
-        }
-        if (lowerMid != null) {
-            field.putNeighbour(Pos.LOWERMID, lowerMid);
-        }
-        if (lowerLeft != null) {
-            field.putNeighbour(Pos.LOWERLEFT, lowerLeft);
-        }
-        if (left != null) {
-            field.putNeighbour(Pos.CENTERLEFT, left);
-        }
+                if( neighbourcolumn<=2 && neighbourcolumn >=0 && neighbourrow<=2 && neighbourrow >=0  ) {
+                    Pos neighbourDir = new Pos(Column.values()[column + x], Row.values()[row - y]);
 
-
+                    field.putNeighbour(neighbourDir, childField.get(neighbourDir));
+                }
+            }
+        }
     }
 
     checkState evaluate(NeighbourField newSetField) {

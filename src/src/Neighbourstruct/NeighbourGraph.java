@@ -1,6 +1,6 @@
 package Neighbourstruct;
 
-import Direction.Pos;
+import Direction.*;
 
 import javax.swing.*;
 import java.awt.*;

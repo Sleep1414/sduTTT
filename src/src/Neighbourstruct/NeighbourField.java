@@ -1,6 +1,8 @@
 package Neighbourstruct;
 
+import Direction.Column;
 import Direction.Pos;
+import Direction.Row;
 
 import javax.swing.*;
 import java.awt.*;
