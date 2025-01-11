@@ -58,6 +58,7 @@ public class StartWindow extends JFrame {
         buttonPanel.add(closeButton);
 
         add(buttonPanel, BorderLayout.SOUTH);
+        setVisible(true);
 
     }
 
