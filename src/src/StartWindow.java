@@ -24,7 +24,6 @@ public class StartWindow extends JFrame {
 
             Der Clou: Du spielst nicht nur, um kleine Spielfelder zu gewinnen – du musst sie so strategisch erobern, dass du auch im großen Gitter 3 in einer Reihe schaffst.
 
-            Ultimate Tic Tac Toe – einfache Regeln, aber unendliche Möglichkeiten. Fordere Freunde heraus und erlebe, wie aus einem simplen Spiel ein packendes Duell wird!
             """);
         instructionArea.setEditable(false);
         instructionArea.setFont(new Font("Arial", Font.PLAIN, 14));
