@@ -15,7 +15,6 @@ public class NeighbourGraph extends NeighbourFieldField {
     Pos lastmove;
     Pos nextmove;
     private final JLabel currentPlayerL;
-    private final JButton middleButton;
 
     private final JFrame playWindow;
 
@@ -54,14 +53,14 @@ public class NeighbourGraph extends NeighbourFieldField {
 
 
         //Mittlerer Button
-        middleButton = new JButton("restart Game");
+        JButton middleButton = new JButton("restart Game");
         JPanel middlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         middlePanel.add(middleButton);
 
         middleButton.addActionListener(e -> {
             playWindow.dispose();
             System.out.println("Game wird neu gestartet");
-            NeighbourGraph spielfeld1 = new NeighbourGraph();
+            new NeighbourGraph();
         });
 
         // Hinzufügen der Panels zum TopBar
@@ -123,7 +122,8 @@ public class NeighbourGraph extends NeighbourFieldField {
     public void update(NeighbourField field) {
         if (Objects.equals(field.getClass().getName(), "Neighbourstruct.NeighbourFieldField")) {
             this.check = evaluate(field);
-            //if(check != checkState.UNCHECKED) {midlabel.setText("Game End");}
+            if(check != checkState.UNCHECKED) {
+                onWin();}
         } else if (Objects.equals(field.getClass().getName(), "Neighbourstruct.NeighbourField")){
             clearMarks();
             Pos pos = field.getFieldFieldPosition();
@@ -205,7 +205,51 @@ public class NeighbourGraph extends NeighbourFieldField {
             }
         }
     }
+    private void onWin(){
+        JFrame winnerFrame = new JFrame("Spiel beendet!");
+        winnerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        winnerFrame.setSize(400, 200);
+        winnerFrame.setLayout(new BorderLayout(10, 10));
 
+        JLabel winnerLabel = new JLabel("", SwingConstants.CENTER);
+        winnerLabel.setFont(new Font("Arial", Font.BOLD, 16));
+
+        if (check == checkState.PLAYER1) {
+            winnerLabel.setText("Der Gewinner ist: Spieler X (1)!");
+            winnerLabel.setForeground(Color.BLUE);
+
+        } else if(check == checkState.PLAYER2) {
+
+            winnerLabel.setText("Der Gewinner ist: Spieler O (2)!");
+            winnerLabel.setForeground(Color.red);
+
+        }
+
+        winnerFrame.add(winnerLabel, BorderLayout.CENTER);
+
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+
+        JButton restartButton = new JButton("Neustarten");
+        restartButton.addActionListener(e -> {
+            winnerFrame.dispose(); // Gewinnerfenster schließen
+            new NeighbourGraph(); // Neues Spiel starten
+        });
+
+
+        JButton closeButton = new JButton("Schließen");
+        closeButton.addActionListener(e -> winnerFrame.dispose());
+
+
+        buttonPanel.add(restartButton);
+        buttonPanel.add(closeButton);
+
+
+        winnerFrame.add(buttonPanel, BorderLayout.SOUTH);
+
+        winnerFrame.setLocationRelativeTo(null);
+        winnerFrame.setVisible(true);
+    }
 
     @Override
     public void updateplayerturn() {

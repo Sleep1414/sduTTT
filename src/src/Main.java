@@ -4,19 +4,7 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-
         StartWindow startWindow = new StartWindow();
-        startWindow.setVisible(true);
-
-        GewinnerScreen win = new GewinnerScreen(true);
-
-        //StartWindow startWindow = new StartWindow();
-        //startWindow.setVisible(true);
-
-
-        //mark: Player1 == true = Red
-        //mark: Player2 == false = Blue
-
 
     }
 }

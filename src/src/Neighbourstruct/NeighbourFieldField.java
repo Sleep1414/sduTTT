@@ -7,10 +7,11 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class NeighbourFieldField extends NeighbourField implements Subscriber {
     HashMap<Pos, NeighbourField> childField;
-    int highestPossibleChecknumber = 3;
+    int highestPossibleChecknumber = 4;
 
     NeighbourFieldField(Subscriber parent, Pos graphPosition, JPanel gameBoard) {
         super(parent, graphPosition);
@@ -108,6 +109,7 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
         Iterator<Map.Entry<Pos, NeighbourField>> fields = newSetField.getNeighbours().entrySet().iterator();
 
         for (int i = 0; i < highestPossibleChecknumber; i++) {
+            try {
             var nextfield = fields.next();
             if (nextfield.getValue() == null) {
                 i--;
@@ -117,16 +119,17 @@ public class NeighbourFieldField extends NeighbourField implements Subscriber {
             if (checkState.UNCHECKED != state) {
                 return state;
             }
+            } catch (NoSuchElementException a){return checkState.UNCHECKED;}
         }
         return checkState.UNCHECKED;
     }
 
 
     private checkState evaluate(NeighbourField field, checkState previousState, Pos dir, int count, NeighbourField previous) {
-        if (previousState == field.getCheck() && count > 1) {
+        if (previousState == field.getCheck() && count > 0) {
             return previousState;
         }
-        if (!field.isChecked() || count > 1) {
+        if (!field.isChecked() || count > 0) {
             return checkState.UNCHECKED;
         }
         if (field.getCheck() != previousState) {
