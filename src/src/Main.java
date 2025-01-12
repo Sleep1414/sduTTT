@@ -5,6 +5,9 @@
 public class Main {
     public static void main(String[] args) {
 
+        StartWindow startWindow = new StartWindow();
+        startWindow.setVisible(true);
+
         GewinnerScreen win = new GewinnerScreen(true);
 
         //StartWindow startWindow = new StartWindow();
